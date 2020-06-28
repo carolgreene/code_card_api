@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+#User.create(name: 'Ozzie', password_digest: 'password')
+#Deck.create(name: 'JavaScript Facts', user_id: '1')
+#Card.create(front: 'who invented JavaScript', back: 'Brendan Eich', deck_id: '1')
