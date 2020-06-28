@@ -2,7 +2,7 @@ class Api::V1::DecksController < ApplicationController
 
   def index
     decks = Deck.all 
-    render json: DecksSerializer.new(decks)
+    render json: DeckSerializer.new(decks)
   end
   
 end
