@@ -1,8 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-  fetchCards()
-  fetchDecks()
+  //fetchCards()
+  //fetchDecks()
+  fetchUsers()
 })
-
+/*
 function fetchCards() {
   let cards = document.getElementById("cards")
   let li = document.createElement("li")
@@ -22,6 +23,7 @@ function fetchDecks() {
   .then(results => {
     console.log(results)
   })
+  */
 
   function fetchUsers() {
   let cards = document.getElementById("users")
@@ -34,4 +36,3 @@ function fetchDecks() {
 
 }
 
-}
