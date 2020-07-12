@@ -23,4 +23,15 @@ function fetchDecks() {
     console.log(results)
   })
 
+  function fetchUsers() {
+  let cards = document.getElementById("users")
+  let li = document.createElement("li")
+  fetch(`http://10.0.0.99:3000/api/v1/users`)
+  .then((res) => res.json())
+  .then(results => {
+    console.log(results)
+  })
+
+}
+
 }
