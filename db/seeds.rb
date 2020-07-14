@@ -10,6 +10,9 @@
 #Deck.create(name: 'JavaScript Facts', user_id: '1')
 #Card.create(front: 'who invented JavaScript', back: 'Brendan Eich', deck_id: '1')
 
-User.create(name: 'Augie', password_digest: 'password')
-User.create(name: 'Walter', password_digest: 'password')
+#User.create(name: 'Augie', password_digest: 'password')
+#User.create(name: 'Walter', password_digest: 'password')
+
+Deck.create(name: 'Ruby Facts', user_id: '2')
+Deck.create(name: 'Data Types', user_id: '3')
 
