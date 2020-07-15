@@ -13,6 +13,11 @@
 #User.create(name: 'Augie', password_digest: 'password')
 #User.create(name: 'Walter', password_digest: 'password')
 
-Deck.create(name: 'Ruby Facts', user_id: '2')
-Deck.create(name: 'Data Types', user_id: '3')
+#Deck.create(name: 'Ruby Facts', user_id: '2')
+#Deck.create(name: 'Data Types', user_id: '3')
+
+#Card.create(front: 'What type of language is Ruby', back: 'Object Oriented', deck_id: '2')
+#Card.create(front: 'How do you measure code efficiency', back: 'Big-O Notation', deck_id: '3')
+
+
 
