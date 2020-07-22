@@ -24,9 +24,31 @@ function fetchDecks() {
     //console.log(results.data)
     results.data.forEach(deck => {
       //console.log(deck.attributes.name)
-      displayDecks(deck)
+      renderDeck(deck)
     })
   })
+}
+
+function renderDeck(deck) {
+  let main = document.querySelector('main') 
+  let div = document.createElement('div')
+  let p = document.createElement('p')
+  let addBtn = document.createElement('button')
+  let deckUl = document.createElement('ul')
+
+  div.setAttribute('class', 'card')
+  div.setAttribute('data-id', `${deck.id}`)
+  addBtn.setAttribute('data-deck-id', `${deck.id}`)
+  deckUl.setAttribute('data-deck-ul', `${deck.id}`)
+
+  p.innerText = `${deck.attributes.name}`
+  addBtn.innerText = "Pick this deck"
+
+  div.appendChild(p)
+  div.appendChild(addBtn)
+  div.appendChild(deckUl)
+  main.appendChild(div)
+
 }
 
     function displayDecks(deck) {
