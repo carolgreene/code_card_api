@@ -45,7 +45,8 @@ li {
 }
 
 button {
-  font-size: .65em;
+  font-size: .8em;
+  height: 50px;
   color: #fff;
   background-color: green;
   border-radius: 10px;

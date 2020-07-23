@@ -22,7 +22,7 @@ function fetchDecks() {
   .then((res) => res.json())
   .then(results => {
     //console.log(results.data)
-    results.data.forEach(deck => {
+    results.forEach(deck => {
       //console.log(deck.attributes.name)
       renderDeck(deck)
     })
@@ -30,6 +30,7 @@ function fetchDecks() {
 }
 
 function renderDeck(deck) {
+  console.log(deck.cards)
   let main = document.querySelector('main') 
   let div = document.createElement('div')
   let p = document.createElement('p')
@@ -41,7 +42,7 @@ function renderDeck(deck) {
   addBtn.setAttribute('data-deck-id', `${deck.id}`)
   deckUl.setAttribute('data-deck-ul', `${deck.id}`)
 
-  p.innerText = `${deck.attributes.name}`
+  p.innerText = `${deck.name}`
   addBtn.innerText = "Pick this deck"
 
   div.appendChild(p)
