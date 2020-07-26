@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
   fetchDecks()
   //fetchUsers()
 })
+
+
 /*
 function fetchCards() {
   let cards = document.getElementById("cards")
@@ -28,7 +30,7 @@ function fetchDecks() {
 }
 
 function renderDeck(deck) {
-  console.log(deck.cards)
+  //console.log(deck.cards)
   let main = document.querySelector('main') 
   let div = document.createElement('div')
   let p = document.createElement('p')
@@ -48,15 +50,26 @@ function renderDeck(deck) {
   div.appendChild(deckUl)
   main.appendChild(div)
 
+  addBtn.addEventListener("click", function(e) {
+    chooseDeck(deck)
+  } )
+
 }
 
-    function displayDecks(deck) {
-      let ul = document.getElementById("deckUl")
-      let li = document.createElement('li')
-      li.innerText = deck.attributes.name
-      ul.appendChild(li)
+function displayDecks(deck) {
+  let ul = document.getElementById("deckUl")
+  let li = document.createElement('li')
+  li.innerText = deck.attributes.name
+  ul.appendChild(li)
 
-    }
+}
+
+function chooseDeck(deck) {
+  console.log(deck.cards)
+}
+
+
+    
 
 
     /*
