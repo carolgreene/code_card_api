@@ -50,9 +50,9 @@ function renderDeck(deck) {
   div.appendChild(deckUl)
   main.appendChild(div)
 
-  addBtn.addEventListener("click", function(e) {
+  addBtn.addEventListener("click", function(e) { 
     chooseDeck(deck)
-  } )
+  })
 
 }
 
@@ -64,8 +64,22 @@ function displayDecks(deck) {
 
 }
 
-function chooseDeck(deck) {
-  console.log(deck.cards)
+function chooseDeck(deck) {  
+  console.log(deck.cards[0])
+  let main1 = document.querySelector('main')
+    main1.innerHTML = ''
+    let div1 = document.createElement('div')
+    let p1 = document.createElement('p')
+    let ckAnsBtn = document.createElement('button')
+
+    div1.setAttribute('class', 'cards')
+    ckAnsBtn.innerText = 'check answer'
+    p1.innerText = `${deck.cards[0].front}`
+
+    p1.appendChild(ckAnsBtn)
+    div1.appendChild(p1)
+    main1.appendChild(div1)      
+  
 }
 
 
