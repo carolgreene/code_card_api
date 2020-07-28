@@ -65,21 +65,40 @@ function displayDecks(deck) {
 }
 
 function chooseDeck(deck) {  
-  console.log(deck.cards[0])
+  let card = deck.cards[0]
   let main1 = document.querySelector('main')
-    main1.innerHTML = ''
-    let div1 = document.createElement('div')
-    let p1 = document.createElement('p')
-    let ckAnsBtn = document.createElement('button')
+  main1.innerHTML = ''
+  let div1 = document.createElement('div')
+  let p1 = document.createElement('p')
+  let ckAnsBtn = document.createElement('button')
 
-    div1.setAttribute('class', 'cards')
-    ckAnsBtn.innerText = 'check answer'
-    p1.innerText = `${deck.cards[0].front}`
+  div1.setAttribute('class', 'cards')
+  ckAnsBtn.innerText = 'check answer'
+  p1.innerText = card.front
 
-    p1.appendChild(ckAnsBtn)
-    div1.appendChild(p1)
-    main1.appendChild(div1)      
+  p1.appendChild(ckAnsBtn)
+  div1.appendChild(p1)
+  main1.appendChild(div1)  
   
+  ckAnsBtn.addEventListener('click', function(e) {
+    checkAnswer(card, main1)
+  })  
+}
+
+function checkAnswer(card, main1) {
+  let div = document.createElement('div')
+  let p = document.createElement('p')
+  let btn = document.createElement('button')
+
+  div.setAttribute('class', 'answer')
+  div.setAttribute('id', 'ansDiv')
+  p.innerText = card.back
+  btn.innerText = 'next'
+
+  p.appendChild(btn)
+  div.appendChild(p)
+  main1.appendChild(div)  
+
 }
 
 
