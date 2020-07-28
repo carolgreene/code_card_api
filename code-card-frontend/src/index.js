@@ -1,3 +1,5 @@
+let counter = 0
+
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
   fetchDecks()
@@ -65,7 +67,8 @@ function displayDecks(deck) {
 }
 
 function chooseDeck(deck) {  
-  let card = deck.cards[0]
+  let card = deck.cards[counter]  
+  
   let main1 = document.querySelector('main')
   main1.innerHTML = ''
   let div1 = document.createElement('div')
@@ -81,11 +84,11 @@ function chooseDeck(deck) {
   main1.appendChild(div1)  
   
   ckAnsBtn.addEventListener('click', function(e) {
-    checkAnswer(card, main1)
+    checkAnswer(deck, card, main1)
   })  
 }
 
-function checkAnswer(card, main1) {
+function checkAnswer(deck, card, main1) {
   let div = document.createElement('div')
   let p = document.createElement('p')
   let btn = document.createElement('button')
@@ -99,6 +102,15 @@ function checkAnswer(card, main1) {
   div.appendChild(p)
   main1.appendChild(div)  
 
+  btn.addEventListener('click', function(e) {
+    nextQuestion(deck, card, main1)     
+    
+  })
+
+  function nextQuestion(deck) {
+    counter++
+    chooseDeck(deck)
+  }
 }
 
 
