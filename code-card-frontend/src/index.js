@@ -1,5 +1,6 @@
 let counter = 0
 
+
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
   fetchDecks()
@@ -24,7 +25,8 @@ function fetchDecks() {
   let li = document.createElement("li")
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
-  .then(results => {    
+  .then(results => {  
+    decks = results  
     results.forEach(deck => {     
       renderDeck(deck)
     })
@@ -32,7 +34,7 @@ function fetchDecks() {
 }
 
 function renderDeck(deck) {
-  //console.log(deck.cards)
+  console.log('in renderDeck', deck.cards)
   let main = document.querySelector('main') 
   let div = document.createElement('div')
   let p = document.createElement('p')
@@ -108,7 +110,13 @@ function checkAnswer(deck, card, main1) {
   })
 
   function nextQuestion(deck) {
-    counter++
+    console.log('counter', counter)
+    console.log(deck.cards.length)
+    if(counter < deck.cards.length - 1) {
+      counter++
+    } else {
+      counter = 0       
+    }    
     chooseDeck(deck)
   }
 }
