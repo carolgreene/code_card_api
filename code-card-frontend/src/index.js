@@ -1,5 +1,6 @@
 let counter = 0
 let decks
+let main = document.querySelector('main')
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -31,10 +32,10 @@ function fetchDecks() {
 }
 
 function renderDeck(decks) {
-  console.log('renderDecks decks:', decks)
-  decks.forEach(deck => {     
   
-  let main = document.querySelector('main') 
+  console.log('renderDecks decks:', decks)
+  decks.forEach(deck => {   
+    
   let div = document.createElement('div')
   let p = document.createElement('p')
   let addBtn = document.createElement('button')
@@ -71,26 +72,29 @@ function displayDecks(deck) {
 function chooseDeck(deck) {  
   let card = deck.cards[counter]  
   
-  let main1 = document.querySelector('main')
-  main1.innerHTML = ''
+  //let main = document.querySelector('main')
+  main.innerHTML = ''
   let div1 = document.createElement('div')
   let p1 = document.createElement('p')
   let ckAnsBtn = document.createElement('button')
 
   div1.setAttribute('class', 'cards')
+  div1.setAttribute('id', 'qDiv')
+  p1.setAttribute('id', 'p')
+  ckAnsBtn.setAttribute('id', 'btn')
   ckAnsBtn.innerText = 'check answer'
   p1.innerText = card.front
 
   p1.appendChild(ckAnsBtn)
   div1.appendChild(p1)
-  main1.appendChild(div1)  
+  main.appendChild(div1)  
   
   ckAnsBtn.addEventListener('click', function(e) {
-    checkAnswer(deck, card, main1)
+    checkAnswer(deck, card, main)
   })  
 }
 
-function checkAnswer(deck, card, main1) {
+function checkAnswer(deck, card, main) {
   let div = document.createElement('div')
   let p = document.createElement('p')
   let btn = document.createElement('button')
@@ -102,20 +106,18 @@ function checkAnswer(deck, card, main1) {
 
   p.appendChild(btn)
   div.appendChild(p)
-  main1.appendChild(div)  
+  main.appendChild(div)  
 
   btn.addEventListener('click', function(e) {
-    nextQuestion(deck, card, main1)     
+    nextQuestion(deck, card, main)     
     
   })
 
-  function nextQuestion(deck) {    
-    console.log('counter', counter)
-    console.log(deck.cards.length)
+  function nextQuestion(deck) {   
     if(counter < deck.cards.length - 1) {
       counter++
     } else {         
-      counter = 0    
+      counter = 0        
     }    
     chooseDeck(deck)
   }
