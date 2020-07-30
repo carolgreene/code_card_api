@@ -31,48 +31,37 @@ function fetchDecks() {
   })
 }
 
-function renderDeck() {
-  
+function renderDeck() {  
   console.log('renderDecks decks:', decks)
   decks.forEach(deck => {   
     
-  let div = document.createElement('div')
-  let p = document.createElement('p')
-  let addBtn = document.createElement('button')
-  let deckUl = document.createElement('ul')
+    let div = document.createElement('div')
+    let p = document.createElement('p')
+    let addBtn = document.createElement('button')
+    let deckUl = document.createElement('ul')
 
-  div.setAttribute('class', 'card')
-  div.setAttribute('data-id', `${deck.id}`)
-  addBtn.setAttribute('data-deck-id', `${deck.id}`)
-  deckUl.setAttribute('data-deck-ul', `${deck.id}`)
+    div.setAttribute('class', 'card')
+    div.setAttribute('data-id', `${deck.id}`)
+    addBtn.setAttribute('data-deck-id', `${deck.id}`)
+    deckUl.setAttribute('data-deck-ul', `${deck.id}`)
 
-  p.innerText = `${deck.name}`
-  addBtn.innerText = "Pick this deck"
+    p.innerText = `${deck.name}`
+    addBtn.innerText = "Pick this deck"
 
-  div.appendChild(p)
-  div.appendChild(addBtn)
-  div.appendChild(deckUl)
-  main.appendChild(div)
+    div.appendChild(p)
+    div.appendChild(addBtn)
+    div.appendChild(deckUl)
+    main.appendChild(div)
 
-  addBtn.addEventListener("click", function(e) { 
-    chooseDeck(deck)
+    addBtn.addEventListener("click", function(e) { 
+      chooseDeck(deck)
+    })
   })
-  })
-
-}
-
-function displayDecks(deck) {
-  let ul = document.getElementById("deckUl")
-  let li = document.createElement('li')
-  li.innerText = deck.attributes.name
-  ul.appendChild(li)
 
 }
 
 function chooseDeck(deck) {  
-  let card = deck.cards[counter]  
-  
-  //let main = document.querySelector('main')
+  let card = deck.cards[counter]    
   main.innerHTML = ''
  
   let div1 = document.createElement('div')
@@ -110,8 +99,7 @@ function checkAnswer(deck, card) {
   main.appendChild(div)  
 
   btn.addEventListener('click', function(e) {
-    nextQuestion(deck)     
-    
+    nextQuestion(deck)        
   })
 
   function nextQuestion(deck) {   
@@ -124,26 +112,7 @@ function checkAnswer(deck, card) {
       renderDeck(decks)
     }      
   }
-}
-
-
-    
-
-
-    /*
-    //need to work out how to get full list. only getting last one
-    //follow this pattern
-    var names = ['John', 'Jane'];
-var ul = document.getElementById("friendsList");
-
-for (var i = 0; i < names.length; i++) {
-    var name = names[i];
-    var li = document.createElement('li');
-    li.appendChild(document.createTextNode(name));
-    ul.appendChild(li);
-}
-
-*/
+}   
   
 
 
@@ -158,6 +127,5 @@ for (var i = 0; i < names.length; i++) {
     console.log(results)
   }) 
 
-}
 */
 
