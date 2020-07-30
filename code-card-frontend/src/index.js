@@ -27,11 +27,11 @@ function fetchDecks() {
   .then((res) => res.json())
   .then(results => {  
     decks = results 
-    renderDeck(decks)     
+    renderDeck()     
   })
 }
 
-function renderDeck(decks) {
+function renderDeck() {
   
   console.log('renderDecks decks:', decks)
   decks.forEach(deck => {   
@@ -74,6 +74,7 @@ function chooseDeck(deck) {
   
   //let main = document.querySelector('main')
   main.innerHTML = ''
+ 
   let div1 = document.createElement('div')
   let p1 = document.createElement('p')
   let ckAnsBtn = document.createElement('button')
@@ -90,11 +91,11 @@ function chooseDeck(deck) {
   main.appendChild(div1)  
   
   ckAnsBtn.addEventListener('click', function(e) {
-    checkAnswer(deck, card, main)
+    checkAnswer(deck, card)
   })  
 }
 
-function checkAnswer(deck, card, main) {
+function checkAnswer(deck, card) {
   let div = document.createElement('div')
   let p = document.createElement('p')
   let btn = document.createElement('button')
@@ -109,17 +110,19 @@ function checkAnswer(deck, card, main) {
   main.appendChild(div)  
 
   btn.addEventListener('click', function(e) {
-    nextQuestion(deck, card, main)     
+    nextQuestion(deck)     
     
   })
 
   function nextQuestion(deck) {   
     if(counter < deck.cards.length - 1) {
       counter++
-    } else {         
-      counter = 0        
-    }    
-    chooseDeck(deck)
+      chooseDeck(deck)
+    } else {             
+      counter = 0   
+      main.innerHTML = ''  
+      renderDeck(decks)
+    }      
   }
 }
 
