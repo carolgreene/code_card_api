@@ -121,14 +121,13 @@ function checkAnswer(deck, card) {
     let btn2 = document.createElement('button')
 
     div.setAttribute('id', 'goAgain')
-    p.innerText = 'Congratulations, you finished the deck? Do you want to try another deck?'
+    btn1.setAttribute('id', 'yesBtn')
+    btn2.setAttribute('id', 'noBtn')
+    p.innerText = 'Congratulations, you finished the deck! Do you want to try another deck?'
     btn1.innerText = 'Yes'
     btn2.innerText = 'No'
-
-    btn1.appendChild(btn2)
-    p.appendChild(btn1)
-    div.appendChild(p)
-    main.appendChild(div)  
+    
+    main.append(div, p, btn1, btn2)  
   }
 
   
