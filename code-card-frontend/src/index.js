@@ -109,9 +109,29 @@ function checkAnswer(deck, card) {
     } else {             
       counter = 0   
       main.innerHTML = ''  
-      renderDeck(decks)
+      finishedDeck()
+      //renderDeck(decks)
     }      
   }
+
+  function finishedDeck() {        
+    let div = document.createElement('div')
+    let p = document.createElement('p')
+    let btn1 = document.createElement('button')
+    let btn2 = document.createElement('button')
+
+    div.setAttribute('id', 'goAgain')
+    p.innerText = 'Congratulations, you finished the deck? Do you want to try another deck?'
+    btn1.innerText = 'Yes'
+    btn2.innerText = 'No'
+
+    btn1.appendChild(btn2)
+    p.appendChild(btn1)
+    div.appendChild(p)
+    main.appendChild(div)  
+  }
+
+  
 }   
   
 
