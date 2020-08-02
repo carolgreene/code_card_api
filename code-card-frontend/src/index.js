@@ -127,7 +127,12 @@ function checkAnswer(deck, card) {
     btn1.innerText = 'Yes'
     btn2.innerText = 'No'
     
-    main.append(div, p, btn1, btn2)  
+    main.append(div, p, btn1, btn2) 
+
+    btn1.addEventListener('click', function(e) {
+      main.innerHTML = ''
+      renderDeck(decks)    
+    }) 
   }
 
   
