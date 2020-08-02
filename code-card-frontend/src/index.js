@@ -133,8 +133,11 @@ function checkAnswer(deck, card) {
       main.innerHTML = ''
       renderDeck(decks)    
     }) 
-  }
 
+    btn2.addEventListener('click', function(e) {
+      alert('clicked')
+    })
+  }
   
 }   
   
