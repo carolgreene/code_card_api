@@ -135,8 +135,18 @@ function checkAnswer(deck, card) {
     }) 
 
     btn2.addEventListener('click', function(e) {
-      alert('clicked')
+      quit()
     })
+  }
+
+  function quit() {
+    main.innerHTML = ''
+    let div = document.createElement('div')
+    let h2 = document.createElement('h2')
+
+    h2.innerText = 'Great job, come back soon!'
+
+    main.append(div, h2)    
   }
   
 }   
