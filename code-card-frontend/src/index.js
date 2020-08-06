@@ -5,9 +5,25 @@ let main = document.querySelector('main')
 
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
-  fetchDecks()
+  //fetchDecks()
+  welcome()
   //fetchUsers()
 })
+
+function welcome() {
+  let div = document.createElement('div')
+  let h1 = document.createElement('h1')
+  let btn = document.createElement('button')
+
+  h1.innerText = 'Welcome to Code Card!'
+  btn.innerText = 'Pick a Deck'
+  
+  main.append(div, h1, btn)
+
+  btn.addEventListener('click', function(e) {
+    fetchDecks()
+  })
+}
 
 
 /*
@@ -23,6 +39,7 @@ function fetchCards() {
 */
 
 function fetchDecks() { 
+  main.innerHTML = ''
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
   .then(results => {  
@@ -33,6 +50,7 @@ function fetchDecks() {
 
 function renderDeck() {  
   console.log('renderDecks decks:', decks)
+  debugger
   decks.forEach(deck => {   
     
     let div = document.createElement('div')
@@ -52,6 +70,8 @@ function renderDeck() {
     div.appendChild(addBtn)
     div.appendChild(deckUl)
     main.appendChild(div)
+
+  
 
     addBtn.addEventListener("click", function(e) { 
       chooseDeck(deck)
