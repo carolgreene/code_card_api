@@ -1,6 +1,7 @@
 let counter = 0
 let decks
 let main = document.querySelector('main')
+//let button = document.getElementById('button')
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -10,17 +11,27 @@ document.addEventListener("DOMContentLoaded", function() {
   //fetchUsers()
 })
 
+/*
+button.addEventListener('click', function(e) {
+  alert('click')
+  e.preventDefault()
+  fetchDecks()
+})
+*/
+
 function welcome() {
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
   let btn = document.createElement('button')
 
   h1.innerText = 'Welcome to Code Card!'
+  btn.setAttribute('type','button')
   btn.innerText = 'Pick a Deck'
   
   main.append(div, h1, btn)
 
   btn.addEventListener('click', function(e) {
+    e.preventDefault()
     fetchDecks()
   })
 }
@@ -49,8 +60,7 @@ function fetchDecks() {
 }
 
 function renderDeck() {  
-  console.log('renderDecks decks:', decks)
-  debugger
+  console.log('renderDecks decks:', decks)  
   decks.forEach(deck => {   
     
     let div = document.createElement('div')
@@ -61,6 +71,7 @@ function renderDeck() {
     div.setAttribute('class', 'card')
     div.setAttribute('data-id', `${deck.id}`)
     addBtn.setAttribute('data-deck-id', `${deck.id}`)
+    //addBtn.setAttribute('type', 'button')
     deckUl.setAttribute('data-deck-ul', `${deck.id}`)
 
     p.innerText = `${deck.name}`
@@ -74,6 +85,7 @@ function renderDeck() {
   
 
     addBtn.addEventListener("click", function(e) { 
+      e.preventDefault()     
       chooseDeck(deck)
     })
   })
@@ -91,7 +103,7 @@ function chooseDeck(deck) {
   div1.setAttribute('class', 'cards')
   div1.setAttribute('id', 'qDiv')
   p1.setAttribute('id', 'p')
-  ckAnsBtn.setAttribute('id', 'btn')
+  ckAnsBtn.setAttribute('id', 'btn')  
   ckAnsBtn.innerText = 'check answer'
   p1.innerText = card.front
 
@@ -100,6 +112,7 @@ function chooseDeck(deck) {
   main.appendChild(div1)  
   
   ckAnsBtn.addEventListener('click', function(e) {
+    e.preventDefault()
     checkAnswer(deck, card)
   })  
 }
@@ -119,6 +132,7 @@ function checkAnswer(deck, card) {
   main.appendChild(div)  
 
   btn.addEventListener('click', function(e) {
+    e.preventDefault()
     nextQuestion(deck)        
   })
 
@@ -130,7 +144,7 @@ function checkAnswer(deck, card) {
       counter = 0   
       main.innerHTML = ''  
       finishedDeck()
-      //renderDeck(decks)
+      renderDeck(decks)
     }      
   }
 
@@ -150,11 +164,13 @@ function checkAnswer(deck, card) {
     main.append(div, p, btn1, btn2) 
 
     btn1.addEventListener('click', function(e) {
+      e.preventDefault()
       main.innerHTML = ''
       renderDeck(decks)    
     }) 
 
     btn2.addEventListener('click', function(e) {
+      e.preventDefault()
       quit()
     })
   }
