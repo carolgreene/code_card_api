@@ -1,12 +1,11 @@
 let counter = 0
 let decks
 let main = document.querySelector('main')
-//let button = document.getElementById('button')
 
 
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
-  //fetchDecks()
+  fetchDecks()
   welcome()
   //fetchUsers()
 })
@@ -32,10 +31,9 @@ function welcome() {
 
   btn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    renderDeck()
   })
 }
-
 
 /*
 function fetchCards() {
@@ -54,12 +52,12 @@ function fetchDecks() {
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
   .then(results => {  
-    decks = results 
-    renderDeck()     
+    decks = results        
   })
 }
 
 function renderDeck() {  
+  main.innerHTML = ''
   console.log('renderDecks decks:', decks)  
   decks.forEach(deck => {   
     
@@ -144,7 +142,7 @@ function checkAnswer(deck, card) {
       counter = 0   
       main.innerHTML = ''  
       finishedDeck()
-      renderDeck(decks)
+      //renderDeck(decks)
     }      
   }
 
