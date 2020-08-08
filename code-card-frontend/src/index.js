@@ -93,6 +93,19 @@ function chooseDeck(deck) {
   quizBtn.innerText = 'Quiz Yourself'
 
   main.append(div, h2, addCardBtn, quizBtn)
+
+  addCardBtn.addEventListener('click', function(e) {
+    addCard(deck)
+  })
+
+  quizBtn.addEventListener('click', function(e) {
+   quizYourself(deck)
+  })
+}
+
+function addCard(deck) {
+  main.innerHTML = ''
+  console.log('add card to deck', deck)
 }
 
 function quizYourself(deck) {  
