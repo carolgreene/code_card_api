@@ -10,13 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
   //fetchUsers()
 })
 
-/*
-button.addEventListener('click', function(e) {
-  alert('click')
-  e.preventDefault()
-  fetchDecks()
-})
-*/
 
 function welcome() {
   let div = document.createElement('div')
@@ -68,8 +61,7 @@ function renderDeck() {
 
     div.setAttribute('class', 'card')
     div.setAttribute('data-id', `${deck.id}`)
-    addBtn.setAttribute('data-deck-id', `${deck.id}`)
-    //addBtn.setAttribute('type', 'button')
+    addBtn.setAttribute('data-deck-id', `${deck.id}`)    
     deckUl.setAttribute('data-deck-ul', `${deck.id}`)
 
     p.innerText = `${deck.name}`
@@ -141,8 +133,7 @@ function checkAnswer(deck, card) {
     } else {             
       counter = 0   
       main.innerHTML = ''  
-      finishedDeck()
-      //renderDeck(decks)
+      finishedDeck()      
     }      
   }
 
