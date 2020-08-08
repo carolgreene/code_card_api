@@ -70,9 +70,7 @@ function renderDeck() {
     div.appendChild(p)
     div.appendChild(addBtn)
     div.appendChild(deckUl)
-    main.appendChild(div)
-
-  
+    main.appendChild(div)  
 
     addBtn.addEventListener("click", function(e) { 
       e.preventDefault()     
@@ -82,7 +80,22 @@ function renderDeck() {
 
 }
 
-function chooseDeck(deck) {  
+function chooseDeck(deck) {
+  main.innerHTML = ''
+  
+  let div = document.createElement('div')
+  let h2 = document.createElement('h2')
+  let addCardBtn = document.createElement('button')
+  let quizBtn = document.createElement('button')
+  
+  h2.innerText = deck.name  
+  addCardBtn.innerText = 'Add Card'  
+  quizBtn.innerText = 'Quiz Yourself'
+
+  main.append(div, h2, addCardBtn, quizBtn)
+}
+
+function quizYourself(deck) {  
   let card = deck.cards[counter]    
   main.innerHTML = ''
  
