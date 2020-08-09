@@ -155,7 +155,7 @@ function checkAnswer(deck, card) {
   function nextQuestion(deck) {   
     if(counter < deck.cards.length - 1) {
       counter++
-      chooseDeck(deck)
+      quizYourself(deck)
     } else {             
       counter = 0   
       main.innerHTML = ''  
