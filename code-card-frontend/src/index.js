@@ -105,7 +105,7 @@ function chooseDeck(deck) {
 
 function addCard(deck) {
   main.innerHTML = ''
-  console.log('add card to deck', deck)
+  document.getElementById("addCardForm").style.display = "block"  
 }
 
 function quizYourself(deck) {  
