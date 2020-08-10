@@ -68,3 +68,7 @@ button.release {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
+
+#addCardForm {
+  display: none;
+}
