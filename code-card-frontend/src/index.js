@@ -49,6 +49,11 @@ function fetchDecks() {
   })
 }
 
+function postCard(deck) {  
+  console.log('deck', deck.id)
+  
+}
+
 function renderDeck() {  
   main.innerHTML = ''
   console.log('renderDecks decks:', decks)  
@@ -106,6 +111,12 @@ function chooseDeck(deck) {
 function addCard(deck) {
   main.innerHTML = ''
   document.getElementById("addCardForm").style.display = "block"  
+  
+  let submitCard = document.getElementById('submitCard')
+  submitCard.addEventListener("click", function(e) {
+    e.preventDefault()
+    postCard(deck)
+  })
 }
 
 function quizYourself(deck) {  
