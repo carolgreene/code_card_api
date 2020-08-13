@@ -49,9 +49,28 @@ function fetchDecks() {
   })
 }
 
+//finish this function & then add to github. Not working yet
 function postCard(deck) {  
-  console.log('deck', deck.id)
+  let question = document.getElementById('question').value 
+  let answer = document.getElementById('answer').value
   
+  const data = { front: question, back: answer, deck_id: deck.id}
+  console.log('data', data)
+
+  fetch('http://10.0.0.99:3000/api/v1/cards', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+  })
+  .catch((error) => {
+    console.error('Error:', error)
+  })
 }
 
 function renderDeck() {  
