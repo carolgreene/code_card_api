@@ -11,7 +11,8 @@ class Api::V1::CardsController < ApplicationController
     render json: CardSerializer.new(card)
   end
   
-  def create 
+  def create   
+    console.log(card_params)
     card = Card.new(card_params)
     
     if card.save 
@@ -49,7 +50,7 @@ class Api::V1::CardsController < ApplicationController
     end
 
     def card_params 
-      params.require(:card).permit(:front, :back, deck_id)
+      params.require(:card).permit(:front, :back, :deck_id)
     end
 
 end
