@@ -52,12 +52,12 @@ function fetchDecks() {
 //finish this function & then add to github. Not working yet
 function postCard(deck) {  
   let question = document.getElementById('question').value 
-  let answer = document.getElementById('answer').value
+  let answer = document.getElementById('answer').value  
+  let id = deck.id  
   
-  const data = { front: question, back: answer, deck_id: deck.id}
-  console.log('data', data)
+  const data = { front: question, back: answer, deck_id: id}  
 
-  fetch('http://10.0.0.99:3000/api/v1/cards', {
+  return fetch('http://10.0.0.99:3000/api/v1/cards', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,10 +67,15 @@ function postCard(deck) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
+    renderCard(data)
   })
   .catch((error) => {
     console.error('Error:', error)
   })
+}
+
+function renderCard(card) {
+  console.log('in render card', card)
 }
 
 function renderDeck() {  
