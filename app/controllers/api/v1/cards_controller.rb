@@ -11,8 +11,7 @@ class Api::V1::CardsController < ApplicationController
     render json: CardSerializer.new(card)
   end
   
-  def create   
-    console.log(card_params)
+  def create       
     card = Card.new(card_params)
     
     if card.save 
