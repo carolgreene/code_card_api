@@ -10,7 +10,9 @@ class Api::V1::DecksController < ApplicationController
 
   def show 
     deck = Deck.find(params[:id])
-    render json: DeckSerializer.new(deck)
+    render json: deck.to_json(:include => {
+      :cards => {:except => [:created_at, :updated_at]}
+    }, :except => [:created_at, :updated_at])    
   end
 
   def create 
