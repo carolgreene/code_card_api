@@ -1,3 +1,5 @@
+// for html server in chrome:    python -m SimpleHTTPServer
+
 let counter = 0
 let decks
 let main = document.querySelector('main')
@@ -74,8 +76,32 @@ function postCard(deck) {
   })
 }
 
-function renderCard(card) {
-  console.log('in render card', card)
+function renderCard(data) {
+  console.log('in render card', data)
+  document.getElementById("addCardForm").style.display = "none" 
+  let card = data
+  let div = document.createElement('div')
+  let cardFront = document.createElement('h3')
+  let cardBack = document.createElement('h3')
+  let btn1 = document.createElement('button')
+  let btn2 = document.createElement('button')
+
+  div.setAttribute('class', 'card')
+  div.setAttribute('data-id', `${card.id}`)
+  btn1.setAttribute('data-card-id', `${card.id}`) 
+  btn1.setAttribute('data-deck-id', `${card.deck_id}` )   
+   
+  cardFront.innerText = `Question: ${card.data.attributes.front}`
+  cardBack.innerText = `Answer: ${card.data.attributes.back}`
+  btn1.innerText = 'See this deck'
+  btn2.innerText = 'See all decks'
+  
+  div.appendChild(cardFront)
+  div.appendChild(cardBack)
+  div.appendChild(btn1)
+  div.appendChild(btn2)
+  main.appendChild(div)
+
 }
 
 function renderDeck() {  
