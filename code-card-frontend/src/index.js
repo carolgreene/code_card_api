@@ -69,43 +69,52 @@ function postCard(deck) {
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    renderCard(data)
+    renderCard(data, deck)
   })
   .catch((error) => {
     console.error('Error:', error)
   })
 }
 
-function renderCard(data) {
-  console.log('in render card', data)
-  let form = document.getElementById("addCardForm")
-  form.style.display = 'none'
-  console.log(form)
-
+function renderCard(data, deck) {  
+  main.innerHTML = ''
+  document.getElementById("addCardForm").reset()
+  document.getElementById("addCardForm").style.display = 'none'
+  
   let card = data
   let div = document.createElement('div')
   let cardFront = document.createElement('h3')
   let cardBack = document.createElement('h3')
-  let thisDeckBtn = document.createElement('button')
+  let addAnotherCardBtn = document.createElement('button')
   let allDecksBtn = document.createElement('button')
 
   div.setAttribute('class', 'card')
   div.setAttribute('data-id', `${card.data.id}`)
-  thisDeckBtn.setAttribute('data-card-id', `${card.data.id}`) 
-  thisDeckBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)  
+  addAnotherCardBtn.setAttribute('data-card-id', `${card.data.id}`) 
+  addAnotherCardBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)  
   allDecksBtn.setAttribute('data-card-id', `${card.data.id}`) 
   allDecksBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)      
    
   cardFront.innerText = `Question: ${card.data.attributes.front}`
   cardBack.innerText = `Answer: ${card.data.attributes.back}`
-  thisDeckBtn.innerText = 'See this deck'
+  addAnotherCardBtn.innerText = 'Add Another Card'
   allDecksBtn.innerText = 'See all decks'
   
   div.appendChild(cardFront)
   div.appendChild(cardBack)
-  div.appendChild(thisDeckBtn)
+  div.appendChild(addAnotherCardBtn)
   div.appendChild(allDecksBtn)
   main.appendChild(div)  
+
+  addAnotherCardBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    addCard(deck)
+  })
+
+  allDecksBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    renderDeck()
+  })
 
 }
 
@@ -166,8 +175,8 @@ function chooseDeck(deck) {
 function addCard(deck) {
   main.innerHTML = ''
   document.getElementById("addCardForm").style.display = "block"  
-  
   let submitCard = document.getElementById('submitCard')
+
   submitCard.addEventListener("click", function(e) {
     e.preventDefault()
     postCard(deck)
