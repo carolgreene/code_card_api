@@ -72,3 +72,7 @@ button.release {
 #addCardForm {
   display: none;
 }
+
+#addDeckForm {
+  display: none;
+}
