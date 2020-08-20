@@ -38,8 +38,9 @@ function welcome() {
   })
 }
 
-function addNewDeck() {
-  console.log("adding deck")
+
+//next step is to send this to proper function when submitDeck is clicked
+function addNewDeck() {  
   main.innerHTML = ''
   document.getElementById("addDeckForm").style.display = "block"
   let submitDeck = document.getElementById('submitDeck')
@@ -72,7 +73,6 @@ function fetchDecks() {
   })
 }
 
-//finish this function & then add to github. Not working yet
 function postCard(deck) {  
   let question = document.getElementById('question').value 
   let answer = document.getElementById('answer').value  
@@ -140,8 +140,7 @@ function renderCard(data, deck) {
 }
 
 function renderDeck() {  
-  main.innerHTML = ''
-  console.log('renderDecks decks:', decks)  
+  main.innerHTML = ''   
   decks.forEach(deck => {   
     
     let div = document.createElement('div')
