@@ -40,6 +40,15 @@ function welcome() {
 
 function addNewDeck() {
   console.log("adding deck")
+  main.innerHTML = ''
+  document.getElementById("addDeckForm").style.display = "block"
+  let submitDeck = document.getElementById('submitDeck')
+
+  submitDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    alert('clicked')
+  })
+
 }
 
 /*
