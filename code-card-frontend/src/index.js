@@ -47,10 +47,30 @@ function addNewDeck() {
 
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
-    alert('clicked')
+    postDeck()
   })
-
 }
+
+function postDeck() {
+  let name = document.getElementById('name').value
+
+  const data = {name: name}
+  console.log(data)
+
+  return fetch('http://10.0.0.99:3000/api/v1/decks', {
+    method: 'POST',
+    headers: {
+      'Content_Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data)
+  })
+  
+}
+  
 
 /*
 function fetchCards() {
