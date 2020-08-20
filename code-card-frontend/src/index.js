@@ -16,15 +16,18 @@ document.addEventListener("DOMContentLoaded", function() {
 function welcome() {
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
-  let btn = document.createElement('button')
+  let pickDeckBtn = document.createElement('button')
+  let addDeckBtn = document.createElement('button')
 
   h1.innerText = 'Welcome to Code Card!'
-  btn.setAttribute('type','button')
-  btn.innerText = 'Pick a Deck'
+  pickDeckBtn.setAttribute('type','button')
+  pickDeckBtn.innerText = 'Pick a Deck'
+  addDeckBtn.setAttribute('type', 'button')
+  addDeckBtn.innerText = 'Add New Deck'
   
-  main.append(div, h1, btn)
+  main.append(div, h1, pickDeckBtn, addDeckBtn)
 
-  btn.addEventListener('click', function(e) {
+  pickDeckBtn.addEventListener('click', function(e) {
     e.preventDefault()
     renderDeck()
   })
