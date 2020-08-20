@@ -31,6 +31,15 @@ function welcome() {
     e.preventDefault()
     renderDeck()
   })
+
+  addDeckBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    addNewDeck()
+  })
+}
+
+function addNewDeck() {
+  console.log("adding deck")
 }
 
 /*
