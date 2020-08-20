@@ -51,7 +51,8 @@ function addNewDeck() {
   })
 }
 
-//using default user_id of 1 until I get users up & running
+//using default user_id of 1 until I get users up & running. Also need to change welcome to pass to 
+//fetchDecks & pull fetchDecks out of initial start
 function postDeck() {
   let name = document.getElementById('name').value
 
@@ -66,9 +67,13 @@ function postDeck() {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {
-    console.log(data)
-  })
+  .then(data => {    
+      console.log('Success:', data);
+      renderDeck()
+    })
+    .catch((error) => {
+      console.error('Error:', error)
+    })  
   
 }
   
