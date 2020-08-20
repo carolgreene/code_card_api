@@ -51,16 +51,17 @@ function addNewDeck() {
   })
 }
 
+//using default user_id of 1 until I get users up & running
 function postDeck() {
   let name = document.getElementById('name').value
 
-  const data = {name: name}
+  const data = {name: name, user_id: 1}
   console.log(data)
 
   return fetch('http://10.0.0.99:3000/api/v1/decks', {
     method: 'POST',
     headers: {
-      'Content_Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
   })

@@ -15,7 +15,7 @@ class Api::V1::DecksController < ApplicationController
     }, :except => [:created_at, :updated_at])    
   end
 
-  def create 
+  def create       
     deck = Deck.new(deck_params)
 
     if deck.save 
