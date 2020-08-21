@@ -7,7 +7,7 @@ let main = document.querySelector('main')
 
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
-  fetchDecks()
+  //fetchDecks()
   welcome()
   //fetchUsers()
 })
@@ -29,7 +29,7 @@ function welcome() {
 
   pickDeckBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    renderDeck()
+    fetchDecks()
   })
 
   addDeckBtn.addEventListener('click', function(e) {
@@ -51,8 +51,7 @@ function addNewDeck() {
   })
 }
 
-//using default user_id of 1 until I get users up & running. Also need to change welcome to pass to 
-//fetchDecks & pull fetchDecks out of initial start
+//using default user_id of 1 until I get users up & running.  
 function postDeck() {
   let name = document.getElementById('name').value
 
@@ -95,7 +94,8 @@ function fetchDecks() {
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
   .then(results => {  
-    decks = results        
+    decks = results  
+    renderDeck()      
   })
 }
 
