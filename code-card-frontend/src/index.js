@@ -12,22 +12,21 @@ document.addEventListener("DOMContentLoaded", function() {
   //fetchUsers()
 })
 
-
 function welcome() {
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
-  let pickDeckBtn = document.createElement('button')
+  let seeDecksBtn = document.createElement('button')
   let addDeckBtn = document.createElement('button')
 
   h1.innerText = 'Welcome to Code Card!'
-  pickDeckBtn.setAttribute('type','button')
-  pickDeckBtn.innerText = 'Pick a Deck'
+  seeDecksBtn.setAttribute('type','button')
+  seeDecksBtn.innerText = 'Pick a Deck'
   addDeckBtn.setAttribute('type', 'button')
   addDeckBtn.innerText = 'Add New Deck'
   
-  main.append(div, h1, pickDeckBtn, addDeckBtn)
+  main.append(div, h1, seeDecksBtn, addDeckBtn)
 
-  pickDeckBtn.addEventListener('click', function(e) {
+  seeDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
     fetchDecks()
   })
@@ -40,6 +39,8 @@ function welcome() {
 
 
 //next step is to send this to proper function when submitDeck is clicked
+//want to be able to add another deck
+//will need to clear out the addCard form
 function addNewDeck() {  
   main.innerHTML = ''
   document.getElementById("addDeckForm").style.display = "block"
@@ -162,7 +163,6 @@ function renderCard(data, deck) {
     e.preventDefault()
     fetchDecks()
   })
-
 }
 
 function renderDeck() {  
@@ -171,23 +171,23 @@ function renderDeck() {
     
     let div = document.createElement('div')
     let p = document.createElement('p')
-    let addBtn = document.createElement('button')
+    let pickDeckBtn = document.createElement('button')
     let deckUl = document.createElement('ul')
 
     div.setAttribute('class', 'card')
     div.setAttribute('data-id', `${deck.id}`)
-    addBtn.setAttribute('data-deck-id', `${deck.id}`)    
+    pickDeckBtn.setAttribute('data-deck-id', `${deck.id}`)    
     deckUl.setAttribute('data-deck-ul', `${deck.id}`)
 
     p.innerText = `${deck.name}`
-    addBtn.innerText = "Pick this deck"
+    pickDeckBtn.innerText = "Pick this deck"
 
     div.appendChild(p)
-    div.appendChild(addBtn)
+    div.appendChild(pickDeckBtn)
     div.appendChild(deckUl)
     main.appendChild(div)  
 
-    addBtn.addEventListener("click", function(e) { 
+    pickDeckBtn.addEventListener("click", function(e) { 
       e.preventDefault()     
       chooseDeck(deck)
     })
