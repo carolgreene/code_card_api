@@ -68,7 +68,7 @@ function postDeck() {
   .then(response => response.json())
   .then(data => {    
       console.log('Success:', data);
-      renderDeck()
+      fetchDecks()
     })
     .catch((error) => {
       console.error('Error:', error)
@@ -160,7 +160,7 @@ function renderCard(data, deck) {
 
   allDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    renderDeck()
+    fetchDecks()
   })
 
 }
