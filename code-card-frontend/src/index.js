@@ -38,9 +38,9 @@ function welcome() {
 }
 
 
-//next step is to send this to proper function when submitDeck is clicked
+//s/we go to the individual deck instead of fetchDecks when submitDeck is clicked?
 //want to be able to add another deck
-//will need to clear out the addCard form
+//need navbar w/add new deck & quit there
 function addNewDeck() {  
   main.innerHTML = ''
   document.getElementById("addDeckForm").style.display = "block"
