@@ -166,7 +166,9 @@ function renderCard(data, deck) {
 }
 
 function renderDeck() {  
-  main.innerHTML = ''   
+  main.innerHTML = ''  
+  document.getElementById("addDeckForm").reset()
+  document.getElementById("addDeckForm").style.display = 'none' 
   decks.forEach(deck => {   
     
     let div = document.createElement('div')
