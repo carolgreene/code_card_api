@@ -42,7 +42,7 @@ function welcome() {
 //want to be able to add another deck
 //need navbar w/add new deck & quit there
 function addNewDeck() {  
-  main.innerHTML = ''
+  clearMain()
   document.getElementById("addDeckForm").style.display = "block"
   let submitDeck = document.getElementById('submitDeck')
 
@@ -91,7 +91,7 @@ function fetchCards() {
 */
 
 function fetchDecks() { 
-  main.innerHTML = ''
+  clearMain()
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
   .then(results => {  
@@ -125,7 +125,7 @@ function postCard(deck) {
 }
 
 function renderCard(data, deck) {  
-  main.innerHTML = ''
+  clearMain()
   resetForms()
     
   let card = data
@@ -165,7 +165,7 @@ function renderCard(data, deck) {
 }
 
 function renderDeck() {  
-  main.innerHTML = ''  
+  clearMain()  
   resetForms()      
   decks.forEach(deck => {   
     
@@ -196,7 +196,7 @@ function renderDeck() {
 }
 
 function chooseDeck(deck) {
-  main.innerHTML = ''
+  clearMain()
   
   let div = document.createElement('div')
   let h2 = document.createElement('h2')
@@ -219,7 +219,7 @@ function chooseDeck(deck) {
 }
 
 function addCard(deck) {
-  main.innerHTML = ''
+  clearMain()
   document.getElementById("addCardForm").style.display = "block"   
   let submitCard = document.getElementById('submitCard')
 
@@ -231,7 +231,7 @@ function addCard(deck) {
 
 function quizYourself(deck) {  
   let card = deck.cards[counter]    
-  main.innerHTML = ''
+  clearMain()
  
   let div1 = document.createElement('div')
   let p1 = document.createElement('p')
@@ -279,7 +279,7 @@ function checkAnswer(deck, card) {
       quizYourself(deck)
     } else {             
       counter = 0   
-      main.innerHTML = ''  
+      clearMain() 
       finishedDeck()      
     }      
   }
@@ -301,7 +301,7 @@ function checkAnswer(deck, card) {
 
     btn1.addEventListener('click', function(e) {
       e.preventDefault()
-      main.innerHTML = ''
+      clearMain()
       renderDeck(decks)    
     }) 
 
@@ -309,6 +309,10 @@ function checkAnswer(deck, card) {
       e.preventDefault()
       quit()
     })
+  }
+
+  function clearMain() {
+    main.innerHTML = ''
   }
 
   function resetForms() {    
@@ -319,7 +323,7 @@ function checkAnswer(deck, card) {
   }
 
   function quit() {
-    main.innerHTML = ''
+    clearMain()
     let div = document.createElement('div')
     let h2 = document.createElement('h2')
 
