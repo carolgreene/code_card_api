@@ -126,9 +126,8 @@ function postCard(deck) {
 
 function renderCard(data, deck) {  
   main.innerHTML = ''
-  document.getElementById("addCardForm").reset()
-  document.getElementById("addCardForm").style.display = 'none'
-  
+  resetForms()
+    
   let card = data
   let div = document.createElement('div')
   let cardFront = document.createElement('h3')
@@ -167,8 +166,7 @@ function renderCard(data, deck) {
 
 function renderDeck() {  
   main.innerHTML = ''  
-  document.getElementById("addDeckForm").reset()
-  document.getElementById("addDeckForm").style.display = 'none' 
+  resetForms()      
   decks.forEach(deck => {   
     
     let div = document.createElement('div')
@@ -222,7 +220,7 @@ function chooseDeck(deck) {
 
 function addCard(deck) {
   main.innerHTML = ''
-  document.getElementById("addCardForm").style.display = "block"  
+  document.getElementById("addCardForm").style.display = "block"   
   let submitCard = document.getElementById('submitCard')
 
   submitCard.addEventListener("click", function(e) {
@@ -311,6 +309,13 @@ function checkAnswer(deck, card) {
       e.preventDefault()
       quit()
     })
+  }
+
+  function resetForms() {    
+    document.getElementById("addDeckForm").reset()
+    document.getElementById("addDeckForm").style.display = 'none' 
+    document.getElementById("addCardForm").reset()
+    document.getElementById("addCardForm").style.display = 'none'
   }
 
   function quit() {
