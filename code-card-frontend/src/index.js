@@ -8,9 +8,21 @@ let main = document.querySelector('main')
 document.addEventListener("DOMContentLoaded", function() {
   //fetchCards()
   //fetchDecks()
-  welcome()
+  welcome()  
   //fetchUsers()
 })
+
+function clearMain() {
+  main.innerHTML = ''
+}
+
+function resetForms() {    
+  document.getElementById("addDeckForm").reset()
+  document.getElementById("addDeckForm").style.display = 'none' 
+  document.getElementById("addCardForm").reset()
+  document.getElementById("addCardForm").style.display = 'none'
+}
+
 
 function welcome() {
   let div = document.createElement('div')
@@ -91,7 +103,7 @@ function fetchCards() {
 */
 
 function fetchDecks() { 
-  clearMain()
+  //clearMain()
   fetch(`http://10.0.0.99:3000/api/v1/decks`)
   .then((res) => res.json())
   .then(results => {  
@@ -309,18 +321,7 @@ function checkAnswer(deck, card) {
       e.preventDefault()
       quit()
     })
-  }
-
-  function clearMain() {
-    main.innerHTML = ''
-  }
-
-  function resetForms() {    
-    document.getElementById("addDeckForm").reset()
-    document.getElementById("addDeckForm").style.display = 'none' 
-    document.getElementById("addCardForm").reset()
-    document.getElementById("addCardForm").style.display = 'none'
-  }
+  }  
 
   function quit() {
     clearMain()
