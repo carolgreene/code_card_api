@@ -3,6 +3,13 @@
 let counter = 0
 let decks
 let main = document.querySelector('main')
+let home = document.getElementById('homeLink')
+
+
+home.addEventListener("click", function(e) {
+  e.preventDefault()  
+  welcome()
+})
 
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -25,6 +32,7 @@ function resetForms() {
 
 
 function welcome() {
+  clearMain()
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
   let seeDecksBtn = document.createElement('button')
