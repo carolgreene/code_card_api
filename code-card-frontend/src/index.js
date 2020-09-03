@@ -5,6 +5,7 @@ let decks
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 let decksLink = document.getElementById('decksLink')
+let addDeckLink = document.getElementById('addDeckLink')
 
 
 
@@ -14,7 +15,13 @@ home.addEventListener("click", function(e) {
 })
 
 decksLink.addEventListener('click', function(e) {
+  e.preventDefault()
   fetchDecks()
+})
+
+addDeckLink.addEventListener('click', function(e) {
+  e.preventDefault()
+  addNewDeck()
 })
 
 
