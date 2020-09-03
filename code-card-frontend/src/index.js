@@ -4,11 +4,17 @@ let counter = 0
 let decks
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
+let decksLink = document.getElementById('decksLink')
+
 
 
 home.addEventListener("click", function(e) {
   e.preventDefault()  
   welcome()
+})
+
+decksLink.addEventListener('click', function(e) {
+  fetchDecks()
 })
 
 
