@@ -6,7 +6,7 @@ let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 let decksLink = document.getElementById('decksLink')
 let addDeckLink = document.getElementById('addDeckLink')
-
+let quitLink = document.getElementById('quitLink')
 
 
 home.addEventListener("click", function(e) {
@@ -22,6 +22,11 @@ decksLink.addEventListener('click', function(e) {
 addDeckLink.addEventListener('click', function(e) {
   e.preventDefault()
   addNewDeck()
+})
+
+quitLink.addEventListener('click', function(e) {
+  e.preventDefault()   
+  quit()
 })
 
 
@@ -306,6 +311,8 @@ function checkAnswer(deck, card) {
     nextQuestion(deck)        
   })
 
+}  
+
   function nextQuestion(deck) {   
     if(counter < deck.cards.length - 1) {
       counter++
@@ -342,10 +349,11 @@ function checkAnswer(deck, card) {
       e.preventDefault()
       quit()
     })
-  }  
-
+  } 
+  
   function quit() {
     clearMain()
+    resetForms()
     let div = document.createElement('div')
     let h2 = document.createElement('h2')
 
@@ -354,7 +362,7 @@ function checkAnswer(deck, card) {
     main.append(div, h2)    
   }
   
-}   
+   
   
 
 
