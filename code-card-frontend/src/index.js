@@ -240,12 +240,16 @@ function chooseDeck(deck) {
   let h2 = document.createElement('h2')
   let addCardBtn = document.createElement('button')
   let quizBtn = document.createElement('button')
+  let editBtn = document.createElement('button')
+  let deleteBtn = document.createElement('button')
   
   h2.innerText = deck.name  
   addCardBtn.innerText = 'Add Card'  
   quizBtn.innerText = 'Quiz Yourself'
+  editBtn.innerText = 'Edit Deck'
+  deleteBtn.innerText = 'Delete Deck'
 
-  main.append(div, h2, addCardBtn, quizBtn)
+  main.append(div, h2, addCardBtn, quizBtn, editBtn, deleteBtn)
 
   addCardBtn.addEventListener('click', function(e) {
     addCard(deck)
