@@ -258,6 +258,14 @@ function chooseDeck(deck) {
   quizBtn.addEventListener('click', function(e) {
    quizYourself(deck)
   })
+
+  editBtn.addEventListener('click', function(e) {
+    alert('clicked')
+  })
+
+  deleteBtn.addEventListener('click', function(e) {
+    alert('also clicked')
+  })
 }
 
 function addCard(deck) {
