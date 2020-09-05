@@ -260,13 +260,29 @@ function chooseDeck(deck) {
   })
 
   editBtn.addEventListener('click', function(e) {
-    alert('clicked')
+    editDeck(deck)
   })
 
   deleteBtn.addEventListener('click', function(e) {
     alert('also clicked')
   })
 }
+
+//need to have event listener for edit button. I may need to use a different button
+function editDeck(deck) {
+  console.log(deck)
+  clearMain()
+  let heading = document.createElement('h4')
+  heading.innerText = `Edit ${deck.name} Deck`
+  let form = document.getElementById("addDeckForm")
+  form.style.display = "block"
+  
+  form.name.value = deck.name
+  form.submitDeck.innerText = 'Submit Edit'
+  form.prepend(heading)
+}
+
+
 
 function addCard(deck) {
   clearMain()
