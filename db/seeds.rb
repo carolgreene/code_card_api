@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+=begin
 User.create(name: 'Ozzie', password_digest: 'password')
 Deck.create(name: 'JavaScript Facts', user_id: '1')
 Card.create(front: 'who invented JavaScript', back: 'Brendan Eich', deck_id: '1')
@@ -29,15 +30,20 @@ Card.create(front: 'How do you create an object', back: 'let emp = { name: "Dani
 Card.create(front: 'How do you create an array', back: 'let x = []; or const y = [1,2,3,4]', deck_id: '1')
 
 
-Card.create(front: 'What are the 2 types of Data types in JavaScript?', back: 'Primitive  & Complex')
-Card.create(front: 'What are the 5 primitive data types?', back: 'String, number, boolean, null, undefined')
-Card.create(front: 'How do Primitive Data Types get passed, compared, & assigned?', back: 'By value')
-Card.create(front: 'What are the 3 complex data types?', back: 'Array, object, function')
-Card.create(front: 'How do Complex Data Types get passed, compared, & assigned?', back: 'By reference')  
-Card.create(front: "What will this return?  const a = 'John' const b = 'John' console.log(a === b)", back: 'true')
-Card.create(front: "What will this return?  const a = { name:'John'} const b = { name:'John'} console.log(a === b)", back: 'false')
-Card.create(front: "Why was the last question false?", back:"because JavaScript checks the objects by the address where they are stored in memory, so even though they contain the same information, they are different objects stored in different locations, so they are not equal")
-Card.create(front: "can you compare 2 different objects, arrays, or functions?", back: "No, you'll always get false because they have different locations in memory")
-Card.create(front: "how can you find out what the data type 'a' is?", back: 'console.log(typeof a)')
-Card.create(front: 'what will console.log(typeof null) show?', back: 'object')
-Card.create(front: 'what will console.log(typeof array) show?', back: 'object')
+Card.create(front: 'What are the 2 types of Data types in JavaScript?', back: 'Primitive  & Complex', deck_id: '1')
+Card.create(front: 'What are the 5 primitive data types?', back: 'String, number, boolean, null, undefined', deck_id: '1')
+Card.create(front: 'How do Primitive Data Types get passed, compared, & assigned?', back: 'By value', deck_id: '1')
+Card.create(front: 'What are the 3 complex data types?', back: 'Array, object, function', deck_id: '1')
+Card.create(front: 'How do Complex Data Types get passed, compared, & assigned?', back: 'By reference', deck_id: '1')  
+Card.create(front: "What will this return?  const a = 'John' const b = 'John' console.log(a === b)", back: 'true', deck_id: '1')
+Card.create(front: "What will this return?  const a = { name:'John'} const b = { name:'John'} console.log(a === b)", back: 'false', deck_id: '1')
+Card.create(front: "Why was the last question false?", back:"because JavaScript checks the objects by the address where they are stored in memory, so even though they contain the same information, they are different objects stored in different locations, so they are not equal", deck_id: '1')
+Card.create(front: "can you compare 2 different objects, arrays, or functions?", back: "No, you'll always get false because they have different locations in memory", deck_id: '1')
+Card.create(front: "how can you find out what the data type 'a' is?", back: 'console.log(typeof a)', deck_id: '1')
+Card.create(front: 'what will console.log(typeof null) show?', back: 'object', deck_id: '1')
+Card.create(front: 'what will console.log(typeof array) show?', back: 'object', deck_id: '1')
+Card.create(front: 'how do you clear the browser cache?', back: 'ctrl F5', deck_id: '1')
+=end
+
+
+  
