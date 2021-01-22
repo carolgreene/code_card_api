@@ -10,7 +10,7 @@ let quitLink = document.getElementById('quitLink')
 
 
 home.addEventListener("click", function(e) {
-  e.preventDefault()  
+  e.preventDefault()    
   welcome()
 })
 
@@ -51,6 +51,7 @@ function resetForms() {
 
 function welcome() {
   clearMain()
+  resetForms()
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
   let seeDecksBtn = document.createElement('button')
