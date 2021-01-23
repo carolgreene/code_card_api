@@ -19,6 +19,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link active" id="homeLink" href="#home">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" id="signInLink" href="#signIn">Sign In</a>
             <a class="nav-item nav-link" id="decksLink" href="#seeDecks">See Decks</a>
             <a class="nav-item nav-link" id="addDeckLink" href="#addDeck">Add Deck</a>
             <a class="nav-item nav-link" id="quitLink" href="#quit">Quit</a>
@@ -32,6 +33,13 @@
   </header>
 
   <div>
+    <form id="signInForm">
+      <label for="userName">User Name</label>
+      <input type="text" name="userName" id="userName"></input>
+      <input type="password" name="password" id="password"></input>
+      <button type="submit" name="submitSignIn" id="submitSignIn">Submit</button>
+    </form>
+
     <form id="addDeckForm">
       <label for="name">Name of Deck:</label>
       <input type="text" name="name" id="name"></input>
