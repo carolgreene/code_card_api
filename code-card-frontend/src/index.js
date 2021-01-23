@@ -4,6 +4,7 @@ let counter = 0
 let decks
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
+let signInLink = document.getElementById("signInLink")
 let decksLink = document.getElementById('decksLink')
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
@@ -12,6 +13,11 @@ let quitLink = document.getElementById('quitLink')
 home.addEventListener("click", function(e) {
   e.preventDefault()    
   welcome()
+})
+
+signInLink.addEventListener("click", function(e) {
+  e.preventDefault() 
+  signIn()
 })
 
 decksLink.addEventListener('click', function(e) {
@@ -42,6 +48,8 @@ function clearMain() {
 }
 
 function resetForms() {    
+  document.getElementById("signInForm").reset()
+  document.getElementById("signInForm").style.display = 'none'
   document.getElementById("addDeckForm").reset()
   document.getElementById("addDeckForm").style.display = 'none' 
   document.getElementById("addCardForm").reset()
@@ -73,6 +81,16 @@ function welcome() {
   addDeckBtn.addEventListener('click', function(e) {
     e.preventDefault()
     addNewDeck()
+  })
+}
+
+function signIn() {
+  clearMain()
+  document.getElementById("signInForm").style.display = "block"
+  let submitSignIn = document.getElementById('submitSignIn')
+
+  submitSignIn.addEventListener('click', function(e) {
+    alert('clicked')
   })
 }
 
