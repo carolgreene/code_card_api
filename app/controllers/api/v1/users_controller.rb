@@ -1,4 +1,5 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :authorized, only: [:create]
   before_action :set_user, only: [:show, :update, :destroy]
 
   def index 
@@ -12,9 +13,11 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create 
-    user = User.new(user_params)
-    if user.save 
-      render json: UserSerializer.new(user) 
+    @user = User.new(user_params)
+    if @user.save 
+      @token = encode_token(user_id: @user_id)
+      render json: { user: UserSerializer.new(@user), jwt: @token },
+      status: :created      
     else 
       error_resp = {
         error: user.errors.full_messages.to_sentence
