@@ -3,6 +3,7 @@ class Api::V1::DecksController < ApplicationController
 
   def index
     decks = Deck.all 
+    #render json: DeckSerializer.new(decks)
     render json: decks.to_json(:include => {
       :cards => {:except => [:created_at, :updated_at]}
     }, :except => [:created_at, :updated_at])
