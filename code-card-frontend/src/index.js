@@ -4,7 +4,7 @@ let counter = 0
 let decks
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
-let signInLink = document.getElementById("signInLink")
+let logInLink = document.getElementById("logInLink")
 let signUpLink = document.getElementById('signUpLink')
 let decksLink = document.getElementById('decksLink')
 let addDeckLink = document.getElementById('addDeckLink')
@@ -16,9 +16,9 @@ home.addEventListener("click", function(e) {
   welcome()
 })
 
-signInLink.addEventListener("click", function(e) {
+logInLink.addEventListener("click", function(e) {
   e.preventDefault() 
-  signIn()
+  logIn()
 })
 
 signUpLink.addEventListener("click", function(e) {
@@ -54,8 +54,8 @@ function clearMain() {
 }
 
 function resetForms() {    
-  document.getElementById("signInForm").reset()
-  document.getElementById("signInForm").style.display = 'none'
+  document.getElementById("logInForm").reset()
+  document.getElementById("logInForm").style.display = 'none'
   document.getElementById("signUpForm").reset()
   document.getElementById("signUpForm").style.display = 'none'
   document.getElementById("addDeckForm").reset()
@@ -92,15 +92,35 @@ function welcome() {
   })
 }
 
-function signIn() {
+function logIn() {
   clearMain()
   resetForms()
-  document.getElementById("signInForm").style.display = "block"
-  let submitSignIn = document.getElementById('submitSignIn')
+  document.getElementById("logInForm").style.display = "block"
+  let submitLogIn = document.getElementById('submitLogIn')
 
-  submitSignIn.addEventListener('click', function(e) {
+  submitLogIn.addEventListener('click', function(e) {
     e.preventDefault()
-    alert('clicked')
+    postLogIn()
+  })
+}
+
+function postLogIn() {
+  let userName = document.getElementById('userName').value
+  let password = document.getElementById('password').value
+
+  const data = {user: {name: userName, password: password}}
+  console.log('data', data)
+
+  return fetch('http://10.0.0.99:3000/api/v1/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success', data)
   })
 }
 
@@ -116,12 +136,13 @@ function signUp() {
   })
 }
 
+//still need to store JWT in local storage & do something after signed up. ie-show user profile
 function postSignUp() {
   let userName = document.getElementById('newUserName').value
   let password = document.getElementById('newUserPassword').value
   
   const data = {user: {name: userName, password: password}}
-  console.log(data)
+  //console.log(data)
 
   return fetch('http://10.0.0.99:3000/api/v1/users', {
     method: 'POST',
