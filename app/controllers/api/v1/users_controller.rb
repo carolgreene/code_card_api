@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def create 
-    @user = User.new(user_params)
+    @user = User.new(user_params)      
     if @user.save 
       @token = encode_token(user_id: @user_id)
       render json: { user: UserSerializer.new(@user), jwt: @token },
