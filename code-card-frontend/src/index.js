@@ -5,6 +5,7 @@ let decks
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 let signInLink = document.getElementById("signInLink")
+let signUpLink = document.getElementById('signUpLink')
 let decksLink = document.getElementById('decksLink')
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
@@ -18,6 +19,11 @@ home.addEventListener("click", function(e) {
 signInLink.addEventListener("click", function(e) {
   e.preventDefault() 
   signIn()
+})
+
+signUpLink.addEventListener("click", function(e) {
+  e.preventDefault()
+  signUp()
 })
 
 decksLink.addEventListener('click', function(e) {
@@ -50,6 +56,8 @@ function clearMain() {
 function resetForms() {    
   document.getElementById("signInForm").reset()
   document.getElementById("signInForm").style.display = 'none'
+  document.getElementById("signUpForm").reset()
+  document.getElementById("signUpForm").style.display = 'none'
   document.getElementById("addDeckForm").reset()
   document.getElementById("addDeckForm").style.display = 'none' 
   document.getElementById("addCardForm").reset()
@@ -86,11 +94,25 @@ function welcome() {
 
 function signIn() {
   clearMain()
+  resetForms()
   document.getElementById("signInForm").style.display = "block"
   let submitSignIn = document.getElementById('submitSignIn')
 
   submitSignIn.addEventListener('click', function(e) {
+    e.preventDefault()
     alert('clicked')
+  })
+}
+
+function signUp() {
+  clearMain()
+  resetForms()
+  document.getElementById("signUpForm").style.display = "block"
+  let submitSignUp = document.getElementById("submitSignUp")
+
+  submitSignUp.addEventListener('click', function(e) {
+    e.preventDefault()
+   alert('clicked') 
   })
 }
 
@@ -100,6 +122,7 @@ function signIn() {
 //need navbar w/add new deck & quit there
 function addNewDeck() {  
   clearMain()
+  resetForms()
   document.getElementById("addDeckForm").style.display = "block"
   let submitDeck = document.getElementById('submitDeck')
 
