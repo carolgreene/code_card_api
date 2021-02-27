@@ -20,6 +20,7 @@
           <div class="navbar-nav">
             <a class="nav-item nav-link active" id="homeLink" href="#home">Home <span class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" id="signInLink" href="#signIn">Sign In</a>
+            <a class="nav-item nav-link" id="signUpLink" href="#signUp">Sign Up</a>
             <a class="nav-item nav-link" id="decksLink" href="#seeDecks">See Decks</a>
             <a class="nav-item nav-link" id="addDeckLink" href="#addDeck">Add Deck</a>
             <a class="nav-item nav-link" id="quitLink" href="#quit">Quit</a>
@@ -34,11 +35,19 @@
 
   <div>
     <form id="signInForm">
-      <label for="userName">User Name</label>
-      <input type="text" name="userName" id="userName"></input>
-      <input type="password" name="password" id="password"></input>
+      <h4>Sign In</h4>      
+      <input type="text" name="userName" id="userName" placeholder="username"></input>
+      <input type="password" name="password" id="password" placeholder="password"></input>
       <button type="submit" name="submitSignIn" id="submitSignIn">Submit</button>
     </form>
+
+  <div>
+    <form id="signUpForm">
+      <h4>Sign Up for Code Card</h4>      
+      <input type="text" name="userName" id="userName" placeholder="username"></input>
+      <input type="password" name="password" id="password" placeholder="password"></input>
+      <button type="submit" name="submitSignUp" id="submitSignUp">Submit</button>
+    </form>  
 
     <form id="addDeckForm">
       <label for="name">Name of Deck:</label>
