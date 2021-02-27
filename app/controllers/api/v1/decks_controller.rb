@@ -1,4 +1,5 @@
 class Api::V1::DecksController < ApplicationController
+  skip_before_action :authorized, only: [:index]  #will need to remove this once I fix it
   before_action :set_deck, only: [:show, :update, :destroy]
 
   def index

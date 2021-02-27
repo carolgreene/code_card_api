@@ -1,4 +1,5 @@
 class Api::V1::CardsController < ApplicationController
+  skip_before_action :authorized, only: [:index]  #will need to remove this once I fix it
   before_action :set_card, only: [:show, :update, :destroy]
 
   def index 
