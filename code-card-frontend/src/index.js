@@ -112,7 +112,27 @@ function signUp() {
 
   submitSignUp.addEventListener('click', function(e) {
     e.preventDefault()
-   alert('clicked') 
+    postSignUp() 
+  })
+}
+
+function postSignUp() {
+  let userName = document.getElementById('newUserName').value
+  let password = document.getElementById('newUserPassword').value
+  
+  const data = {user: {name: userName, password: password}}
+  console.log(data)
+
+  return fetch('http://10.0.0.99:3000/api/v1/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success', data)
   })
 }
 
