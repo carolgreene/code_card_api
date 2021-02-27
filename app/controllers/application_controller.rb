@@ -15,7 +15,8 @@ class ApplicationController < ActionController::API
 
   #JWT.decode takes 3 arguments: a JWT as a string, an (have to look this up)
   def decoded_token 
-    if auth_headertoken = auth_header.split(' ')[1]
+    if auth_header
+      token = auth_header.split(' ')[1]
       #header: {'Authorization': 'Bearer <token>'}
       #The Begin/Rescue syntax allows us to rescue out of an exception in Ruby.
       begin
