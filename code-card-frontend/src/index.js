@@ -121,8 +121,17 @@ function postLogIn() {
   .then(response => response.json())
   .then(data => {
     console.log('Success', data)
+    localStorage.setItem('jwt_token', data.jwt)
+    renderUserProfile(data)
   })
 }
+
+function renderUserProfile(data) {
+  clearMain()
+  resetForms()
+console.log('in render User', data)
+}
+
 
 function signUp() {
   clearMain()
@@ -154,6 +163,8 @@ function postSignUp() {
   .then(response => response.json())
   .then(data => {
     console.log('Success', data)
+    localStorage.setItem('jwt_token', data.jwt)
+    renderUserProfile(data)
   })
 }
 
@@ -469,8 +480,8 @@ function checkAnswer(deck, card) {
     let h2 = document.createElement('h2')
 
     h2.innerText = 'Great job, come back soon!'
-
-    main.append(div, h2)    
+    main.append(div, h2)
+    localStorage.clear()
   }
   
    
