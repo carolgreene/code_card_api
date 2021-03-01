@@ -70,25 +70,25 @@ function welcome() {
   resetForms()
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
-  let seeDecksBtn = document.createElement('button')
-  let addDeckBtn = document.createElement('button')
+  let signUpBtn = document.createElement('button')
+  let logInBtn = document.createElement('button')
 
   h1.innerText = 'Welcome to Code Card!'
-  seeDecksBtn.setAttribute('type','button')
-  seeDecksBtn.innerText = 'Pick a Deck'
-  addDeckBtn.setAttribute('type', 'button')
-  addDeckBtn.innerText = 'Add New Deck'
+  signUpBtn.setAttribute('type','button')
+  signUpBtn.innerText = 'Sign Up'
+  logInBtn.setAttribute('type', 'button')
+  logInBtn.innerText = 'Log In'
   
-  main.append(div, h1, seeDecksBtn, addDeckBtn)
+  main.append(div, h1, signUpBtn, logInBtn)
 
-  seeDecksBtn.addEventListener('click', function(e) {
+  signUpBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    signUp()
   })
 
-  addDeckBtn.addEventListener('click', function(e) {
+  logInBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    addNewDeck()
+    logIn()
   })
 }
 
@@ -129,7 +129,31 @@ function postLogIn() {
 function renderUserProfile(data) {
   clearMain()
   resetForms()
-console.log('in render User', data)
+  let div = document.createElement('div')
+  let h3 = document.createElement('h3')
+  let seeDecksBtn = document.createElement('button')
+  let addDeckBtn = document.createElement('button')
+  let name = data.user.data.attributes.name
+
+  h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
+  seeDecksBtn.setAttribute('type', 'button')
+  seeDecksBtn.innerText ='Pick a Deck'
+  addDeckBtn.setAttribute('type', 'button')
+  addDeckBtn.innerText ='Add New Deck'
+
+  main.append(div, h3, seeDecksBtn, addDeckBtn)
+
+  seeDecksBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    fetchDecks()
+  })
+
+  addDeckBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    addNewDeck()
+  })
+
+console.log('in render User', data.user.data.attributes.name)
 }
 
 
@@ -188,7 +212,7 @@ function addNewDeck() {
 function postDeck() {
   let name = document.getElementById('name').value
 
-  const data = {name: name, user_id: 1}
+  const data = {name: name, user_id: 4}
   console.log(data)
 
   return fetch('http://10.0.0.99:3000/api/v1/decks', {
@@ -204,7 +228,7 @@ function postDeck() {
       fetchDecks()
     })
     .catch((error) => {
-      console.error('Error:', error)
+      alert('Error:', error)
     })  
   
 }
