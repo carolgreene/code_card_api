@@ -1,15 +1,20 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authorized, only: [:create, :index]
+  #remove :show from skip_before once authorization is working
+  skip_before_action :authorized, only: [:create, :index, :show]
   before_action :set_user, only: [:show, :update, :destroy]
 
   def index 
-    users = User.all 
-    render json: UserSerializer.new(users)
+    users = User.all     
+    render json: users.to_json(:include => {
+      :decks => {:except => [:created_at, :updated_at]}
+    }), :except => [:created_at, :updated_at]
   end
 
   def show 
     user = User.find(params[:id])
-    render json: UserSerializer.new(user)
+    render json: user.to_json(:include => {
+      :decks => {:except => [:created_at, :updated_at]}
+    }), :except => [:created_at, :updated_at]
   end
 
   def create 
