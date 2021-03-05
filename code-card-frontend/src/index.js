@@ -134,6 +134,7 @@ function renderUserProfile(data) {
   let seeDecksBtn = document.createElement('button')
   let addDeckBtn = document.createElement('button')
   let name = data.user.data.attributes.name
+  let userId = data.user.data.id  
 
   h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
   seeDecksBtn.setAttribute('type', 'button')
@@ -150,7 +151,7 @@ function renderUserProfile(data) {
 
   addDeckBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    addNewDeck()
+    addNewDeck(userId)
   })
 
 console.log('in render User', data.user.data.attributes.name)
@@ -196,7 +197,7 @@ function postSignUp() {
 //s/we go to the individual deck instead of fetchDecks when submitDeck is clicked?
 //want to be able to add another deck
 //need navbar w/add new deck & quit there
-function addNewDeck() {  
+function addNewDeck(userId) {  
   clearMain()
   resetForms()
   document.getElementById("addDeckForm").style.display = "block"
@@ -204,20 +205,21 @@ function addNewDeck() {
 
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
-    postDeck()
+    postDeck(userId)
   })
 }
 
 //using default user_id of 1 until I get users up & running.  
-function postDeck() {
+function postDeck(userId) {  
   let name = document.getElementById('name').value
 
-  const data = {name: name, user_id: 4}
+  const data = {name: name, user_id: userId}
   console.log(data)
 
   return fetch('http://10.0.0.99:3000/api/v1/decks', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
