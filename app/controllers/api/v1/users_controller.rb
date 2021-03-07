@@ -9,13 +9,7 @@ class Api::V1::UsersController < ApplicationController
       :decks => {:except => [:created_at, :updated_at]}
     }), :except => [:created_at, :updated_at]
   end
-
-  def show 
-    user = User.find(params[:id])
-    render json: user.to_json(:include => {
-      :decks => {:except => [:created_at, :updated_at]}
-    }), :except => [:created_at, :updated_at]
-  end
+  
 
   def create 
     @user = User.new(user_params)      
@@ -29,6 +23,13 @@ class Api::V1::UsersController < ApplicationController
       }
       render json: error_resp, status: :unprocessable_entity
     end 
+  end
+
+  def show 
+    user = User.find(params[:id])    
+    render json: user.to_json(:include => {
+      :decks => {:except => [:created_at, :updated_at]}      
+    }), :except => [:created_at, :updated_at]
   end
 
   def update
