@@ -2,6 +2,7 @@
 
 let counter = 0
 let decks
+let userId
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 let logInLink = document.getElementById("logInLink")
@@ -9,6 +10,7 @@ let signUpLink = document.getElementById('signUpLink')
 let decksLink = document.getElementById('decksLink')
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
+
 
 
 home.addEventListener("click", function(e) {
@@ -134,7 +136,7 @@ function renderUserProfile(data) {
   let seeDecksBtn = document.createElement('button')
   let addDeckBtn = document.createElement('button')
   let name = data.user.data.attributes.name
-  let userId = data.user.data.id  
+  userId = data.user.data.id  
 
   h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
   seeDecksBtn.setAttribute('type', 'button')
@@ -146,12 +148,12 @@ function renderUserProfile(data) {
 
   seeDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    fetchUserDecks()
   })
 
   addDeckBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    addNewDeck(userId)
+    addNewDeck()
   })
 
 console.log('in render User', data.user.data.attributes.name)
@@ -197,7 +199,7 @@ function postSignUp() {
 //s/we go to the individual deck instead of fetchDecks when submitDeck is clicked?
 //want to be able to add another deck
 //need navbar w/add new deck & quit there
-function addNewDeck(userId) {  
+function addNewDeck() {  
   clearMain()
   resetForms()
   document.getElementById("addDeckForm").style.display = "block"
@@ -205,12 +207,12 @@ function addNewDeck(userId) {
 
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
-    postDeck(userId)
+    postDeck()
   })
 }
 
 //using default user_id of 1 until I get users up & running.  
-function postDeck(userId) {  
+function postDeck() {  
   let name = document.getElementById('name').value
 
   const data = {name: name, user_id: userId}
@@ -227,7 +229,7 @@ function postDeck(userId) {
   .then(response => response.json())
   .then(data => {    
       console.log('Success:', data);
-      fetchDecks()
+      fetchUserDecks(userId)
     })
     .catch((error) => {
       alert('Error:', error)
@@ -258,6 +260,17 @@ function fetchDecks() {
   })
 }
 
+function fetchUserDecks() {
+  console.log('id', userId)
+  fetch(`http://10.0.0.99:3000/api/v1/users/${userId}`)
+  .then((res) => res.json())
+  .then(results => {
+    decks = results.decks
+    //console.log('results', results.decks)
+    renderDeck()
+  })
+}
+
 function postCard(deck) {  
   let question = document.getElementById('question').value 
   let answer = document.getElementById('answer').value  
@@ -268,6 +281,7 @@ function postCard(deck) {
   return fetch('http://10.0.0.99:3000/api/v1/cards', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -318,7 +332,7 @@ function renderCard(data, deck) {
 
   allDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    fetchUserDecks(userId)
   })
 }
 
@@ -346,12 +360,30 @@ function renderDeck() {
     main.appendChild(div)  
 
     pickDeckBtn.addEventListener("click", function(e) { 
-      e.preventDefault()     
-      chooseDeck(deck)
+      e.preventDefault() 
+      fetchDeck(deck.id)    
+      //chooseDeck(deck)
     })
   })
 
 }
+
+
+
+function fetchDeck(deckId) { 
+  //clearMain()
+  fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, { 
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`
+  }
+})
+  .then((res) => res.json())
+  .then(results => {  
+    deck = results  
+    chooseDeck(deck)      
+  })
+}
+
 
 function chooseDeck(deck) {
   clearMain()
@@ -376,6 +408,7 @@ function chooseDeck(deck) {
   })
 
   quizBtn.addEventListener('click', function(e) {
+    //alert('clicked')
    quizYourself(deck)
   })
 
@@ -403,8 +436,9 @@ function editDeck(deck) {
 }
 
 
-
+//REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
 function addCard(deck) {
+  console.log('in addCard-deck', deck)
   clearMain()
   document.getElementById("addCardForm").style.display = "block"   
   let submitCard = document.getElementById('submitCard')
@@ -416,6 +450,7 @@ function addCard(deck) {
 }
 
 function quizYourself(deck) {  
+  console.log('deck in quiz', deck)
   let card = deck.cards[counter]    
   clearMain()
  
@@ -502,6 +537,7 @@ function checkAnswer(deck, card) {
   function quit() {
     clearMain()
     resetForms()
+    userId = ''
     let div = document.createElement('div')
     let h2 = document.createElement('h2')
 
