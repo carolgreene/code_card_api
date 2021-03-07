@@ -1,13 +1,16 @@
 // for html server in chrome:    python -m SimpleHTTPServer
 
+//MADE userId A GLOBAL VARIABLE. NOT SURE IF THAT IS GOOD PRACTICE
 let counter = 0
 let decks
 let userId
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
+
+//SET UP LINKS TO BE ON OR OFF DEPENDING ON WHETHER OR NOT LOGGED IN
 let logInLink = document.getElementById("logInLink")
 let signUpLink = document.getElementById('signUpLink')
-let decksLink = document.getElementById('decksLink')
+let decksLink = document.getElementById('decksLink')  //NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
 
@@ -172,7 +175,6 @@ function signUp() {
   })
 }
 
-//still need to store JWT in local storage & do something after signed up. ie-show user profile
 function postSignUp() {
   let userName = document.getElementById('newUserName').value
   let password = document.getElementById('newUserPassword').value
@@ -196,9 +198,6 @@ function postSignUp() {
 }
 
 
-//s/we go to the individual deck instead of fetchDecks when submitDeck is clicked?
-//want to be able to add another deck
-//need navbar w/add new deck & quit there
 function addNewDeck() {  
   clearMain()
   resetForms()
@@ -210,8 +209,7 @@ function addNewDeck() {
     postDeck()
   })
 }
-
-//using default user_id of 1 until I get users up & running.  
+ 
 function postDeck() {  
   let name = document.getElementById('name').value
 
@@ -449,6 +447,7 @@ function addCard(deck) {
   })
 }
 
+//NEED TO ADD A CK WITH AN ERROR MSG IF THERE ARE  NO CARDS IN THE DECK
 function quizYourself(deck) {  
   console.log('deck in quiz', deck)
   let card = deck.cards[counter]    
