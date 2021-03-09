@@ -10,7 +10,7 @@ let home = document.getElementById('homeLink')
 //SET UP LINKS TO BE ON OR OFF DEPENDING ON WHETHER OR NOT LOGGED IN
 let logInLink = document.getElementById("logInLink")
 let signUpLink = document.getElementById('signUpLink')
-let decksLink = document.getElementById('decksLink')  //NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS
+let decksLink = document.getElementById('decksLink')  //DONE...NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
 
@@ -33,7 +33,7 @@ signUpLink.addEventListener("click", function(e) {
 
 decksLink.addEventListener('click', function(e) {
   e.preventDefault()
-  fetchDecks()
+  fetchUserDecks()
 })
 
 addDeckLink.addEventListener('click', function(e) {
@@ -263,8 +263,8 @@ function fetchUserDecks() {
   fetch(`http://10.0.0.99:3000/api/v1/users/${userId}`)
   .then((res) => res.json())
   .then(results => {
-    decks = results.decks
-    //console.log('results', results.decks)
+    decks = results.decks    
+    console.log('results', decks)
     renderDeck()
   })
 }
