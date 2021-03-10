@@ -3,7 +3,7 @@
 //MADE userId A GLOBAL VARIABLE. NOT SURE IF THAT IS GOOD PRACTICE
 let counter = 0
 let decks
-let userId
+let userId = null
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 
@@ -67,6 +67,24 @@ function resetForms() {
   document.getElementById("addDeckForm").style.display = 'none' 
   document.getElementById("addCardForm").reset()
   document.getElementById("addCardForm").style.display = 'none'
+  setNavBar()
+}
+
+// NEED TO FIGURE OUT HOW TO CK FOR VALUE IN EITHER USERID OR LOCALSTORAGE.JWT_TOKEN 
+function setNavBar() {
+  if(userId !== null) {
+    logInLink.style.display = 'none' 
+    signUpLink.style.display = 'none'
+    decksLink.style.display = 'block'  
+    addDeckLink.style.display = 'block'
+    quitLink.style.display = 'block'
+  } else { 
+    decksLink.style.display = 'none'  
+    addDeckLink.style.display = 'none'
+    quitLink.style.display = 'none'
+    logInLink.style.display = 'block' 
+    signUpLink.style.display = 'block'
+  }
 }
 
 
@@ -85,6 +103,8 @@ function welcome() {
   logInBtn.innerText = 'Log In'
   
   main.append(div, h1, signUpBtn, logInBtn)
+
+  console.log('in welcome-userId', userId)
 
   signUpBtn.addEventListener('click', function(e) {
     e.preventDefault()
@@ -127,27 +147,29 @@ function postLogIn() {
   .then(data => {
     console.log('Success', data)
     localStorage.setItem('jwt_token', data.jwt)
+    console.log('jwt_token', localStorage.jwt_token)    
     renderUserProfile(data)
   })
 }
 
 function renderUserProfile(data) {
+  userId = data.user.data.id
   clearMain()
   resetForms()
+
   let div = document.createElement('div')
   let h3 = document.createElement('h3')
   let seeDecksBtn = document.createElement('button')
   let addDeckBtn = document.createElement('button')
-  let name = data.user.data.attributes.name
-  userId = data.user.data.id  
-
+  let name = data.user.data.attributes.name    
+ 
   h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
   seeDecksBtn.setAttribute('type', 'button')
   seeDecksBtn.innerText ='Pick a Deck'
   addDeckBtn.setAttribute('type', 'button')
   addDeckBtn.innerText ='Add New Deck'
 
-  main.append(div, h3, seeDecksBtn, addDeckBtn)
+  main.append(div, h3, seeDecksBtn, addDeckBtn)  
 
   seeDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
@@ -160,6 +182,7 @@ function renderUserProfile(data) {
   })
 
 console.log('in render User', data.user.data.attributes.name)
+console.log('in render User- userId', userId)
 }
 
 
@@ -534,15 +557,18 @@ function checkAnswer(deck, card) {
   } 
   
   function quit() {
+    userId = null
     clearMain()
     resetForms()
-    userId = ''
+    
     let div = document.createElement('div')
     let h2 = document.createElement('h2')
 
     h2.innerText = 'Great job, come back soon!'
     main.append(div, h2)
     localStorage.clear()
+    console.log('token', localStorage.jwt_token)
+    console.log('userId', userId)    
   }
   
    
