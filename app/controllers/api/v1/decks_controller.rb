@@ -31,8 +31,11 @@ class Api::V1::DecksController < ApplicationController
   end
 
   def update
+    deck = Deck.find(params[:id])
     if deck.update(deck_params)
-      render json: DeckSerializer.new(deck)
+      render json: deck.to_json(:include => {
+      :cards => {:except => [:created_at, :updated_at]}
+    }, :except => [:created_at, :updated_at])        
     else
       error_resp = {
         error: deck.errors.full_messages.to_sentence
