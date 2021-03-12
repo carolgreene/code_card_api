@@ -1,5 +1,8 @@
 // for html server in chrome:    python -m SimpleHTTPServer
 
+
+//****NEED TO EDIT & DELETE DECKS & CARDS */
+
 //MADE userId A GLOBAL VARIABLE. NOT SURE IF THAT IS GOOD PRACTICE
 let counter = 0
 let decks
@@ -7,10 +10,10 @@ let userId = null
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
 
-//SET UP LINKS TO BE ON OR OFF DEPENDING ON WHETHER OR NOT LOGGED IN
+//SET UP LINKS TO BE ON OR OFF DEPENDING ON WHETHER OR NOT LOGGED IN     *****DONE*****
 let logInLink = document.getElementById("logInLink")
 let signUpLink = document.getElementById('signUpLink')
-let decksLink = document.getElementById('decksLink')  //DONE...NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS
+let decksLink = document.getElementById('decksLink')  //NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS ****DONE****
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
 
@@ -70,7 +73,9 @@ function resetForms() {
   setNavBar()
 }
 
-// NEED TO FIGURE OUT HOW TO CK FOR VALUE IN EITHER USERID OR LOCALSTORAGE.JWT_TOKEN 
+// NEED TO FIGURE OUT HOW TO CK FOR VALUE IN EITHER USERID OR LOCALSTORAGE.JWT_TOKEN     ***DONE***
+
+//LOOK INTO WHETHER THIS WOULD BE BETTER DOING W/IN CSS FILE
 function setNavBar() {
   if(userId !== null) {
     logInLink.style.display = 'none' 
@@ -81,7 +86,7 @@ function setNavBar() {
   } else { 
     decksLink.style.display = 'none'  
     addDeckLink.style.display = 'none'
-    quitLink.style.display = 'none'
+    quitLink.style.display = 'block'
     logInLink.style.display = 'block' 
     signUpLink.style.display = 'block'
   }
@@ -424,20 +429,20 @@ function chooseDeck(deck) {
 
   main.append(div, h2, addCardBtn, quizBtn, editBtn, deleteBtn)
 
-  addCardBtn.addEventListener('click', function(e) {
+  addCardBtn.addEventListener('click', function(e) {  //WHERE'S MY E.PREVENTDEFAULT???
     addCard(deck)
   })
 
-  quizBtn.addEventListener('click', function(e) {
+  quizBtn.addEventListener('click', function(e) {   //NO E.PREVENTDEFAULT HERE EITHER???
     //alert('clicked')
    quizYourself(deck)
   })
 
-  editBtn.addEventListener('click', function(e) {
+  editBtn.addEventListener('click', function(e) {   //SAME AS ABOVE
     editDeck(deck)
   })
 
-  deleteBtn.addEventListener('click', function(e) {
+  deleteBtn.addEventListener('click', function(e) {  //SAME AS ABOVE
     alert('also clicked')
   })
 }
@@ -454,6 +459,41 @@ function editDeck(deck) {
   form.name.value = deck.name
   form.submitDeck.innerText = 'Submit Edit'
   form.prepend(heading)
+
+  form.submitDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    patchDeck(deck)
+  })
+}
+
+function patchDeck(deck) {
+  console.log('in patchDeck', deck)
+  let deckId = deck.id
+  let name = document.getElementById('name').value
+
+  const data = {name: name, user_id: userId}
+  console.log(data)
+
+  return fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {    
+      console.log('Success:', data);
+      fetchUserDecks(userId)
+    })
+    .catch((error) => {
+      alert('Error:', error)
+    })  
+  
+  
+
+
 }
 
 
