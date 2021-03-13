@@ -3,6 +3,6 @@ class Deck < ApplicationRecord
   validates :name, uniqueness: { case_sensitive: false }
   
 
-  has_many :cards
+  has_many :cards, dependent: :destroy
   belongs_to :user
 end
