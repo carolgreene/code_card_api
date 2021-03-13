@@ -45,9 +45,13 @@ class Api::V1::DecksController < ApplicationController
   end
 
   def destroy
+    deck = Deck.find(params[:id])
     decks = Deck.all
     deck.destroy
-    render json: DeckSerializer.new(decks)
+    #render json: DeckSerializer.new(decks)
+    render json: decks.to_json(:include => {
+      :cards => {:except => [:created_at, :updated_at]}
+    }, :except => [:created_at, :updated_at])
   end
 
 
