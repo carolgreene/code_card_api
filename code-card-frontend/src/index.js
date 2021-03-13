@@ -444,6 +444,7 @@ function chooseDeck(deck) {
 
   deleteBtn.addEventListener('click', function(e) {  //SAME AS ABOVE
     alert('also clicked')
+    deleteDeck(deck)
   })
 }
 
@@ -489,11 +490,32 @@ function patchDeck(deck) {
     })
     .catch((error) => {
       alert('Error:', error)
-    })  
+    })    
   
+}
+
+//WORKS TO DELETE DECK BUT CARDS IN DECK STILL EXIST. NEED TO FIX IT
+function deleteDeck(deck) {
+  console.log('in delete', deck)
+  let deckId = deck.id
+
+  return fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    
+  })
+  .then(response => response.json())
+  .then(data => {    
+      console.log('Success:', data);
+      fetchUserDecks(userId)
+    })
+    .catch((error) => {
+      alert('Error:', error)
+    })    
   
-
-
 }
 
 
