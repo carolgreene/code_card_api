@@ -416,18 +416,25 @@ function chooseDeck(deck) {
   
   let div = document.createElement('div')
   let h2 = document.createElement('h2')
+  let seeCardsBtn = document.createElement('button')  //added  SEE CARDS
   let addCardBtn = document.createElement('button')
   let quizBtn = document.createElement('button')
   let editBtn = document.createElement('button')
   let deleteBtn = document.createElement('button')
   
-  h2.innerText = deck.name  
+  h2.innerText = deck.name 
+
+  seeCardsBtn.innerText = 'See Cards'   //added  SEE CARDS
   addCardBtn.innerText = 'Add Card'  
   quizBtn.innerText = 'Quiz Yourself'
   editBtn.innerText = 'Edit Deck'
   deleteBtn.innerText = 'Delete Deck'
 
-  main.append(div, h2, addCardBtn, quizBtn, editBtn, deleteBtn)
+  main.append(div, h2, seeCardsBtn, addCardBtn, quizBtn, editBtn, deleteBtn)   //added seeCardBtn-  SEE CARDS
+
+  seeCardsBtn.addEventListener('click', function(e) {    //added this listener-- SEE CARDS
+    seeCards(deck)
+  })
 
   addCardBtn.addEventListener('click', function(e) {  //WHERE'S MY E.PREVENTDEFAULT???
     addCard(deck)
@@ -446,6 +453,42 @@ function chooseDeck(deck) {
     alert('also clicked')
     deleteDeck(deck)
   })
+}
+
+function seeCards(deck) {  //added this function---SEE CARDS
+  clearMain()
+  resetForms()
+  let h3 = document.createElement('h3')
+  h3.innerText = deck.name
+  main.appendChild(h3)
+  
+  deck.cards.forEach(card => {   
+    
+    let div = document.createElement('div')
+    let cardFront = document.createElement('h4')    
+    let cardBack = document.createElement('h4')
+    let editCardBtn = document.createElement('button')
+    let deleteCardBtn = document.createElement('button')
+    
+    div.setAttribute('class', 'card')
+    div.setAttribute('data-id', `${card.id}`)
+    editCardBtn.setAttribute('data-card-id', `${card.id}`)  
+    deleteCardBtn.setAttribute('data-card-id', `${card.id}`)  
+    
+
+    cardFront.innerText = `Question: ${card.front}`
+    cardBack.innerText = `Answer: ${card.back}`
+    editCardBtn.innerText = "Edit Card"
+    deleteCardBtn.innerText = "Delete Card"
+
+    div.appendChild(cardFront)
+    div.appendChild(cardBack)
+    div.appendChild(editCardBtn)
+    div.appendChild(deleteCardBtn)
+    main.appendChild(div)  
+    
+  console.log(card)
+})
 }
 
 //need to have event listener for edit button. I may need to use a different button
@@ -542,7 +585,7 @@ function quizYourself(deck) {
   let p1 = document.createElement('p')
   let ckAnsBtn = document.createElement('button')
 
-  div1.setAttribute('class', 'cards')
+  div1.setAttribute('class', 'card')
   div1.setAttribute('id', 'qDiv')
   p1.setAttribute('id', 'p')
   ckAnsBtn.setAttribute('id', 'btn')  
@@ -564,7 +607,7 @@ function checkAnswer(deck, card) {
   let p = document.createElement('p')
   let btn = document.createElement('button')
 
-  div.setAttribute('class', 'answer')
+  div.setAttribute('class', 'card')
   div.setAttribute('id', 'ansDiv')
   p.innerText = card.back
   btn.innerText = 'next'
