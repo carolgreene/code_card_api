@@ -26,6 +26,7 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def update 
+    card = Card.find(params[:id])
     if card.update(card_params) 
       render json: CardSerializer.new(card)
     else
