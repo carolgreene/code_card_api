@@ -487,8 +487,65 @@ function seeCards(deck) {  //added this function---SEE CARDS
     div.appendChild(deleteCardBtn)
     main.appendChild(div)  
     
-  console.log(card)
+  editCardBtn.addEventListener('click', function(e) {
+    alert('clicked edit')
+    editCard(card, deck)
+  })
+
+  deleteCardBtn.addEventListener('click', function(e) {
+    alert('clicked delete')
+    deleteCard(card) 
+  })
 })
+}
+
+//NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS
+function editCard(card, deck) {
+  console.log('in edit card', card)
+  clearMain() 
+  let heading = document.createElement('h4')
+  heading.innerText = 'Edit Card'
+  let form = document.getElementById("addCardForm")
+  form.style.display = "block"
+
+  form.question.value = card.front
+  form.answer.value = card.back
+  form.submitCard.innerText = "Submit Edit"
+  form.prepend(heading)
+
+  form.submitCard.addEventListener('click', function(e) {
+    e.preventDefault()
+    patchCard(card, deck)
+  })
+}
+
+function patchCard(card, deck) {
+  console.log('in patchCard', card)
+  let cardId = card.id
+  let deck_id = card.deck_id
+  let card_front = document.getElementById('question').value
+  let card_back = document.getElementById('answer').value
+
+  const data = {front: card_front, back: card_back, deck_id: deck_id}
+  console.log('data', data)
+
+  return fetch(`http://10.0.0.99:3000/api/v1/cards/${cardId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization':  `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('after fetch-data', data)
+    renderCard(data, deck)
+  })
+}
+
+function deleteCard(card) {
+  console.log('in delete card', card)
 }
 
 //need to have event listener for edit button. I may need to use a different button
