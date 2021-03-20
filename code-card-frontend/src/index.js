@@ -462,8 +462,16 @@ function seeCards(deck) {  //added this function---SEE CARDS
   h3.innerText = deck.name
   main.appendChild(h3)
   
-  deck.cards.forEach(card => {   
-    
+  deck.cards.forEach(card => {  
+    let cardFt = card.front
+    let cardBk = card.back 
+  displayCard(card, cardFt, cardBk)
+  })
+}
+
+
+//ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK
+function displayCard(card, cardFt, cardBk) {    
     let div = document.createElement('div')
     let cardFront = document.createElement('h4')    
     let cardBack = document.createElement('h4')
@@ -473,11 +481,10 @@ function seeCards(deck) {  //added this function---SEE CARDS
     div.setAttribute('class', 'card')
     div.setAttribute('data-id', `${card.id}`)
     editCardBtn.setAttribute('data-card-id', `${card.id}`)  
-    deleteCardBtn.setAttribute('data-card-id', `${card.id}`)  
-    
+    deleteCardBtn.setAttribute('data-card-id', `${card.id}`)      
 
-    cardFront.innerText = `Question: ${card.front}`
-    cardBack.innerText = `Answer: ${card.back}`
+    cardFront.innerText = `Question: ${cardFt}` 
+    cardBack.innerText = `Answer: ${cardBk}` 
     editCardBtn.innerText = "Edit Card"
     deleteCardBtn.innerText = "Delete Card"
 
@@ -488,16 +495,14 @@ function seeCards(deck) {  //added this function---SEE CARDS
     main.appendChild(div)  
     
   editCardBtn.addEventListener('click', function(e) {
-    alert('clicked edit')
     editCard(card, deck)
   })
 
   deleteCardBtn.addEventListener('click', function(e) {
-    alert('clicked delete')
-    deleteCard(card) 
+    deleteCard(card, deck) 
   })
-})
 }
+
 
 //NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS
 function editCard(card, deck) {
@@ -544,8 +549,46 @@ function patchCard(card, deck) {
   })
 }
 
-function deleteCard(card) {
+//NEED TO FIGURE OUT HOW TO MAKE THIS GO BACK TO THIS DECK'S CARDS & HAVE IT EXCLUDE THE DELETED CARD
+function deleteCard(card,deck) {
   console.log('in delete card', card)
+  let cardId = card.id
+  let deckId = deck.id
+  
+  return fetch(`http://10.0.0.99:3000/api/v1/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('after fetch', data)
+    //fetchDeck(deckId)
+    cardsAfterDelete(data, deck)
+    //cardsAfterDelete(data, deck)
+  })
+  .catch((error) => {
+    alert('Error:', error)
+  })    
+}
+
+
+function cardsAfterDelete(cards, deck) {
+  clearMain()
+  resetForms()
+  let h3 = document.createElement('h3')
+  h3.innerText = deck.name
+  main.appendChild(h3)
+  let chosen = cards.data.filter(card => card.relationships.deck.data.id == deck.id)
+       
+  chosen.forEach(card => {   
+    let cardFt = card.attributes.front
+    let cardBk = card.attributes.back
+    displayCard(card, cardFt, cardBk)    
+  })
 }
 
 //need to have event listener for edit button. I may need to use a different button
@@ -594,7 +637,7 @@ function patchDeck(deck) {
   
 }
 
-//WORKS TO DELETE DECK BUT CARDS IN DECK STILL EXIST. NEED TO FIX IT
+//WORKS TO DELETE DECK BUT CARDS IN DECK STILL EXIST. NEED TO FIX IT---****FIXED****
 function deleteDeck(deck) {
   console.log('in delete', deck)
   let deckId = deck.id
