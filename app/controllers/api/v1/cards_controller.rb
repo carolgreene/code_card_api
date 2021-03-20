@@ -38,6 +38,7 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def destroy
+    card = Card.find(params[:id])
     cards = Card.all
     card.destroy
     render json: CardSerializer.new(cards) 
