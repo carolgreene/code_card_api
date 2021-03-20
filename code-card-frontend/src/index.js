@@ -232,6 +232,7 @@ function addNewDeck() {
   document.getElementById("addDeckForm").style.display = "block"
   let submitDeck = document.getElementById('submitDeck')
 
+
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
     postDeck()
@@ -413,6 +414,7 @@ function fetchDeck(deckId) {
 
 function chooseDeck(deck) {
   clearMain()
+  resetForms()
   
   let div = document.createElement('div')
   let h2 = document.createElement('h2')
@@ -427,7 +429,7 @@ function chooseDeck(deck) {
   seeCardsBtn.innerText = 'See Cards'   //added  SEE CARDS
   addCardBtn.innerText = 'Add Card'  
   quizBtn.innerText = 'Quiz Yourself'
-  editBtn.innerText = 'Edit Deck'
+  editBtn.innerText = 'Edit Deck Name'
   deleteBtn.innerText = 'Delete Deck'
 
   main.append(div, h2, seeCardsBtn, addCardBtn, quizBtn, editBtn, deleteBtn)   //added seeCardBtn-  SEE CARDS
@@ -446,7 +448,7 @@ function chooseDeck(deck) {
   })
 
   editBtn.addEventListener('click', function(e) {   //SAME AS ABOVE
-    editDeck(deck)
+    editDeckName(deck)
   })
 
   deleteBtn.addEventListener('click', function(e) {  //SAME AS ABOVE
@@ -459,8 +461,17 @@ function seeCards(deck) {  //added this function---SEE CARDS
   clearMain()
   resetForms()
   let h3 = document.createElement('h3')
+  let backBtn = document.createElement('button')
+
   h3.innerText = deck.name
+  backBtn.innerText = 'Back to Deck'
+
+  h3.appendChild(backBtn)
   main.appendChild(h3)
+
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
   
   deck.cards.forEach(card => {  
     let cardFt = card.front
@@ -500,24 +511,24 @@ function displayCard(card, cardFt, cardBk) {
 
   deleteCardBtn.addEventListener('click', function(e) {
     deleteCard(card, deck) 
-  })
+  })  
 }
 
 
-//NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS
+//NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS---****DONE***
 function editCard(card, deck) {
   console.log('in edit card', card)
   clearMain() 
-  let heading = document.createElement('h4')
-  heading.innerText = 'Edit Card'
+  
   let form = document.getElementById("addCardForm")
   form.style.display = "block"
+  let heading = form.querySelector('h4')
+  heading.innerText = 'Edit Card'  
 
   form.question.value = card.front
   form.answer.value = card.back
   form.submitCard.innerText = "Submit Edit"
-  form.prepend(heading)
-
+  
   form.submitCard.addEventListener('click', function(e) {
     e.preventDefault()
     patchCard(card, deck)
@@ -592,13 +603,19 @@ function cardsAfterDelete(cards, deck) {
 }
 
 //need to have event listener for edit button. I may need to use a different button
-function editDeck(deck) {
+function editDeckName(deck) {
   console.log(deck)
-  clearMain()
+  clearMain() 
+  
   let heading = document.createElement('h4')
-  heading.innerText = `Edit ${deck.name} Deck`
+  heading.innerText = `Edit ${deck.name} Deck Name`
+  
   let form = document.getElementById("addDeckForm")
   form.style.display = "block"
+  let priorHeading = form.querySelector('h4')  
+  if(priorHeading) {
+    priorHeading.parentElement.removeChild(priorHeading)
+  }  
   
   form.name.value = deck.name
   form.submitDeck.innerText = 'Submit Edit'
@@ -666,7 +683,11 @@ function deleteDeck(deck) {
 function addCard(deck) {
   console.log('in addCard-deck', deck)
   clearMain()
-  document.getElementById("addCardForm").style.display = "block"   
+  let form = document.getElementById("addCardForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')  
+  heading.innerText = "Add Card" 
+
   let submitCard = document.getElementById('submitCard')
 
   submitCard.addEventListener("click", function(e) {
