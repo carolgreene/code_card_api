@@ -1,7 +1,7 @@
 // for html server in chrome:    python -m SimpleHTTPServer
 
+//BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS*****************
 
-//****NEED TO EDIT & DELETE DECKS & CARDS */
 
 //MADE userId A GLOBAL VARIABLE. NOT SURE IF THAT IS GOOD PRACTICE
 let counter = 0
@@ -229,9 +229,15 @@ function postSignUp() {
 function addNewDeck() {  
   clearMain()
   resetForms()
-  document.getElementById("addDeckForm").style.display = "block"
-  let submitDeck = document.getElementById('submitDeck')
+  let form = document.getElementById("addDeckForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')
+  heading.innerText = "Add New Deck"
+  let backBtn = form.querySelector("#backBtn") 
+  backBtn.style.display = "none"
 
+  let submitDeck = document.getElementById('submitDeck')
+  submitDeck.innerText = 'Submit Deck'
 
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
@@ -512,9 +518,12 @@ function displayCard(card, cardFt, cardBk) {
   deleteCardBtn.addEventListener('click', function(e) {
     deleteCard(card, deck) 
   })  
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
 }
 
-
+//BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS
 //NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS---****DONE***
 function editCard(card, deck) {
   console.log('in edit card', card)
@@ -532,6 +541,16 @@ function editCard(card, deck) {
   form.submitCard.addEventListener('click', function(e) {
     e.preventDefault()
     patchCard(card, deck)
+  })
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
+
+  backToCards.addEventListener('click', function(e) {
+    e.preventDefault()
+    seeCards(deck)
   })
 }
 
@@ -592,6 +611,9 @@ function cardsAfterDelete(cards, deck) {
   resetForms()
   let h3 = document.createElement('h3')
   h3.innerText = deck.name
+  backBtn.innerText = 'Back to Deck'
+
+  h3.appendChild(backBtn)
   main.appendChild(h3)
   let chosen = cards.data.filter(card => card.relationships.deck.data.id == deck.id)
        
@@ -605,25 +627,33 @@ function cardsAfterDelete(cards, deck) {
 //need to have event listener for edit button. I may need to use a different button
 function editDeckName(deck) {
   console.log(deck)
-  clearMain() 
-  
-  let heading = document.createElement('h4')
-  heading.innerText = `Edit ${deck.name} Deck Name`
+  clearMain()   
   
   let form = document.getElementById("addDeckForm")
   form.style.display = "block"
-  let priorHeading = form.querySelector('h4')  
-  if(priorHeading) {
-    priorHeading.parentElement.removeChild(priorHeading)
-  }  
+
+  let heading = form.querySelector('h4')
+  heading.innerText = "Edit Deck Name"
+
+  let backBtn = form.querySelector("#backBtn") 
+  backBtn.style.display = "block"
+
+  //let priorHeading = form.querySelector('h4')  
+  //if(priorHeading) {
+  //  priorHeading.parentElement.removeChild(priorHeading)
+  //}  
   
   form.name.value = deck.name
   form.submitDeck.innerText = 'Submit Edit'
-  form.prepend(heading)
+  //form.prepend(heading)
 
   form.submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
     patchDeck(deck)
+  })
+
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
   })
 }
 
@@ -682,17 +712,28 @@ function deleteDeck(deck) {
 //REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
 function addCard(deck) {
   console.log('in addCard-deck', deck)
-  clearMain()
+  clearMain()  
+
   let form = document.getElementById("addCardForm")
   form.style.display = "block"
   let heading = form.querySelector('h4')  
-  heading.innerText = "Add Card" 
+  heading.innerText = "Add Card"     
 
   let submitCard = document.getElementById('submitCard')
+  submitCard.innerText = "Submit Card"
 
   submitCard.addEventListener("click", function(e) {
     e.preventDefault()
     postCard(deck)
+  })  
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
+
+  backToCards.addEventListener('click', function(e) {
+    seeCards(deck)
   })
 }
 
