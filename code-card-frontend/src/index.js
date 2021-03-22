@@ -424,7 +424,7 @@ function chooseDeck(deck) {
   
   let div = document.createElement('div')
   let h2 = document.createElement('h2')
-  let seeCardsBtn = document.createElement('button')  //added  SEE CARDS
+  let seeCardsBtn = document.createElement('button')  
   let addCardBtn = document.createElement('button')
   let quizBtn = document.createElement('button')
   let editBtn = document.createElement('button')
@@ -440,25 +440,23 @@ function chooseDeck(deck) {
 
   main.append(div, h2, seeCardsBtn, addCardBtn, quizBtn, editBtn, deleteBtn)   //added seeCardBtn-  SEE CARDS
 
-  seeCardsBtn.addEventListener('click', function(e) {    //added this listener-- SEE CARDS
+  seeCardsBtn.addEventListener('click', function(e) {    
     seeCards(deck)
   })
 
-  addCardBtn.addEventListener('click', function(e) {  //WHERE'S MY E.PREVENTDEFAULT???
+  addCardBtn.addEventListener('click', function(e) {  
     addCard(deck)
   })
 
-  quizBtn.addEventListener('click', function(e) {   //NO E.PREVENTDEFAULT HERE EITHER???
-    //alert('clicked')
-   quizYourself(deck)
+  quizBtn.addEventListener('click', function(e) {   
+    quizYourself(deck)
   })
 
-  editBtn.addEventListener('click', function(e) {   //SAME AS ABOVE
+  editBtn.addEventListener('click', function(e) {   
     editDeckName(deck)
   })
 
-  deleteBtn.addEventListener('click', function(e) {  //SAME AS ABOVE
-    alert('also clicked')
+  deleteBtn.addEventListener('click', function(e) {  
     deleteDeck(deck)
   })
 }
@@ -487,7 +485,7 @@ function seeCards(deck) {  //added this function---SEE CARDS
 }
 
 
-//ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK
+//ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
 function displayCard(card, cardFt, cardBk) {    
     let div = document.createElement('div')
     let cardFront = document.createElement('h4')    
@@ -579,7 +577,7 @@ function patchCard(card, deck) {
   })
 }
 
-//NEED TO FIGURE OUT HOW TO MAKE THIS GO BACK TO THIS DECK'S CARDS & HAVE IT EXCLUDE THE DELETED CARD
+//NEED TO FIGURE OUT HOW TO MAKE THIS GO BACK TO THIS DECK'S CARDS & HAVE IT EXCLUDE THE DELETED CARD--***FIXED***
 function deleteCard(card,deck) {
   console.log('in delete card', card)
   let cardId = card.id
@@ -757,11 +755,20 @@ function quizYourself(deck) {
   p1.appendChild(ckAnsBtn)
   div1.appendChild(p1)
   main.appendChild(div1)  
+
+  let backToDeck = document.createElement('button')
+  backToDeck.innerText = "Back to Deck"
+  main.appendChild(backToDeck)
   
   ckAnsBtn.addEventListener('click', function(e) {
     e.preventDefault()
     checkAnswer(deck, card)
   })  
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
 }
 
 function checkAnswer(deck, card) {
