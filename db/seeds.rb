@@ -6,13 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-=begin
-User.create(name: 'Ozzie', password_digest: 'password')
+
+User.create(name: 'Ozzie', password: 'password')
 Deck.create(name: 'JavaScript Facts', user_id: '1')
 Card.create(front: 'who invented JavaScript', back: 'Brendan Eich', deck_id: '1')
 
-User.create(name: 'Augie', password_digest: 'password')
-User.create(name: 'Walter', password_digest: 'password')
+User.create(name: 'Augie', password: 'password')
+User.create(name: 'Walter', password: 'password')
 
 Deck.create(name: 'Ruby Facts', user_id: '2')
 Deck.create(name: 'Data Types', user_id: '3')
@@ -43,7 +43,7 @@ Card.create(front: "how can you find out what the data type 'a' is?", back: 'con
 Card.create(front: 'what will console.log(typeof null) show?', back: 'object', deck_id: '1')
 Card.create(front: 'what will console.log(typeof array) show?', back: 'object', deck_id: '1')
 Card.create(front: 'how do you clear the browser cache?', back: 'ctrl F5', deck_id: '1')
-=end
+
 
 
   

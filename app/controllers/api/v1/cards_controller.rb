@@ -1,4 +1,5 @@
 class Api::V1::CardsController < ApplicationController
+  skip_before_action :authorized, only: [:index]  #will need to remove this once I fix it
   before_action :set_card, only: [:show, :update, :destroy]
 
   def index 
@@ -25,6 +26,7 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def update 
+    card = Card.find(params[:id])
     if card.update(card_params) 
       render json: CardSerializer.new(card)
     else
@@ -36,6 +38,7 @@ class Api::V1::CardsController < ApplicationController
   end
 
   def destroy
+    card = Card.find(params[:id])
     cards = Card.all
     card.destroy
     render json: CardSerializer.new(cards) 

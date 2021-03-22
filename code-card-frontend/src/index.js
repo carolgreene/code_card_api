@@ -1,13 +1,22 @@
 // for html server in chrome:    python -m SimpleHTTPServer
 
+//BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS*****************
+
+
+//MADE userId A GLOBAL VARIABLE. NOT SURE IF THAT IS GOOD PRACTICE
 let counter = 0
 let decks
+let userId = null
 let main = document.querySelector('main')
 let home = document.getElementById('homeLink')
-let signInLink = document.getElementById("signInLink")
-let decksLink = document.getElementById('decksLink')
+
+//SET UP LINKS TO BE ON OR OFF DEPENDING ON WHETHER OR NOT LOGGED IN     *****DONE*****
+let logInLink = document.getElementById("logInLink")
+let signUpLink = document.getElementById('signUpLink')
+let decksLink = document.getElementById('decksLink')  //NEED TO MAKE THIS GO TO USER'S DECKS NOT ALL DECKS ****DONE****
 let addDeckLink = document.getElementById('addDeckLink')
 let quitLink = document.getElementById('quitLink')
+
 
 
 home.addEventListener("click", function(e) {
@@ -15,14 +24,19 @@ home.addEventListener("click", function(e) {
   welcome()
 })
 
-signInLink.addEventListener("click", function(e) {
+logInLink.addEventListener("click", function(e) {
   e.preventDefault() 
-  signIn()
+  logIn()
+})
+
+signUpLink.addEventListener("click", function(e) {
+  e.preventDefault()
+  signUp()
 })
 
 decksLink.addEventListener('click', function(e) {
   e.preventDefault()
-  fetchDecks()
+  fetchUserDecks()
 })
 
 addDeckLink.addEventListener('click', function(e) {
@@ -48,12 +62,34 @@ function clearMain() {
 }
 
 function resetForms() {    
-  document.getElementById("signInForm").reset()
-  document.getElementById("signInForm").style.display = 'none'
+  document.getElementById("logInForm").reset()
+  document.getElementById("logInForm").style.display = 'none'
+  document.getElementById("signUpForm").reset()
+  document.getElementById("signUpForm").style.display = 'none'
   document.getElementById("addDeckForm").reset()
   document.getElementById("addDeckForm").style.display = 'none' 
   document.getElementById("addCardForm").reset()
   document.getElementById("addCardForm").style.display = 'none'
+  setNavBar()
+}
+
+// NEED TO FIGURE OUT HOW TO CK FOR VALUE IN EITHER USERID OR LOCALSTORAGE.JWT_TOKEN     ***DONE***
+
+//LOOK INTO WHETHER THIS WOULD BE BETTER DOING W/IN CSS FILE
+function setNavBar() {
+  if(userId !== null) {
+    logInLink.style.display = 'none' 
+    signUpLink.style.display = 'none'
+    decksLink.style.display = 'block'  
+    addDeckLink.style.display = 'block'
+    quitLink.style.display = 'block'
+  } else { 
+    decksLink.style.display = 'none'  
+    addDeckLink.style.display = 'none'
+    quitLink.style.display = 'block'
+    logInLink.style.display = 'block' 
+    signUpLink.style.display = 'block'
+  }
 }
 
 
@@ -62,61 +98,50 @@ function welcome() {
   resetForms()
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
-  let seeDecksBtn = document.createElement('button')
-  let addDeckBtn = document.createElement('button')
+  let signUpBtn = document.createElement('button')
+  let logInBtn = document.createElement('button')
 
   h1.innerText = 'Welcome to Code Card!'
-  seeDecksBtn.setAttribute('type','button')
-  seeDecksBtn.innerText = 'Pick a Deck'
-  addDeckBtn.setAttribute('type', 'button')
-  addDeckBtn.innerText = 'Add New Deck'
+  signUpBtn.setAttribute('type','button')
+  signUpBtn.innerText = 'Sign Up'
+  logInBtn.setAttribute('type', 'button')
+  logInBtn.innerText = 'Log In'
   
-  main.append(div, h1, seeDecksBtn, addDeckBtn)
+  main.append(div, h1, signUpBtn, logInBtn)
 
-  seeDecksBtn.addEventListener('click', function(e) {
+  console.log('in welcome-userId', userId)
+
+  signUpBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    signUp()
   })
 
-  addDeckBtn.addEventListener('click', function(e) {
+  logInBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    addNewDeck()
+    logIn()
   })
 }
 
-function signIn() {
+function logIn() {
   clearMain()
-  document.getElementById("signInForm").style.display = "block"
-  let submitSignIn = document.getElementById('submitSignIn')
+  resetForms()
+  document.getElementById("logInForm").style.display = "block"
+  let submitLogIn = document.getElementById('submitLogIn')
 
-  submitSignIn.addEventListener('click', function(e) {
-    alert('clicked')
-  })
-}
-
-
-//s/we go to the individual deck instead of fetchDecks when submitDeck is clicked?
-//want to be able to add another deck
-//need navbar w/add new deck & quit there
-function addNewDeck() {  
-  clearMain()
-  document.getElementById("addDeckForm").style.display = "block"
-  let submitDeck = document.getElementById('submitDeck')
-
-  submitDeck.addEventListener('click', function(e) {
+  submitLogIn.addEventListener('click', function(e) {
     e.preventDefault()
-    postDeck()
+    postLogIn()
   })
 }
 
-//using default user_id of 1 until I get users up & running.  
-function postDeck() {
-  let name = document.getElementById('name').value
+function postLogIn() {
+  let userName = document.getElementById('userName').value
+  let password = document.getElementById('password').value
 
-  const data = {name: name, user_id: 1}
-  console.log(data)
+  const data = {user: {name: userName, password: password}}
+  console.log('data', data)
 
-  return fetch('http://10.0.0.99:3000/api/v1/decks', {
+  return fetch('http://10.0.0.99:3000/api/v1/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -124,12 +149,123 @@ function postDeck() {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
+  .then(data => {
+    console.log('Success', data)
+    localStorage.setItem('jwt_token', data.jwt)
+    console.log('jwt_token', localStorage.jwt_token)    
+    renderUserProfile(data)
+  })
+}
+
+function renderUserProfile(data) {
+  userId = data.user.data.id
+  clearMain()
+  resetForms()
+
+  let div = document.createElement('div')
+  let h3 = document.createElement('h3')
+  let seeDecksBtn = document.createElement('button')
+  let addDeckBtn = document.createElement('button')
+  let name = data.user.data.attributes.name    
+ 
+  h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
+  seeDecksBtn.setAttribute('type', 'button')
+  seeDecksBtn.innerText ='Pick a Deck'
+  addDeckBtn.setAttribute('type', 'button')
+  addDeckBtn.innerText ='Add New Deck'
+
+  main.append(div, h3, seeDecksBtn, addDeckBtn)  
+
+  seeDecksBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    fetchUserDecks()
+  })
+
+  addDeckBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    addNewDeck()
+  })
+
+console.log('in render User', data.user.data.attributes.name)
+console.log('in render User- userId', userId)
+}
+
+
+function signUp() {
+  clearMain()
+  resetForms()
+  document.getElementById("signUpForm").style.display = "block"
+  let submitSignUp = document.getElementById("submitSignUp")
+
+  submitSignUp.addEventListener('click', function(e) {
+    e.preventDefault()
+    postSignUp() 
+  })
+}
+
+function postSignUp() {
+  let userName = document.getElementById('newUserName').value
+  let password = document.getElementById('newUserPassword').value
+  
+  const data = {user: {name: userName, password: password}}
+  //console.log(data)
+
+  return fetch('http://10.0.0.99:3000/api/v1/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success', data)
+    localStorage.setItem('jwt_token', data.jwt)
+    renderUserProfile(data)
+  })
+}
+
+
+function addNewDeck() {  
+  clearMain()
+  resetForms()
+  let form = document.getElementById("addDeckForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')
+  heading.innerText = "Add New Deck"
+  let backBtn = form.querySelector("#backBtn") 
+  backBtn.style.display = "none"
+
+  let submitDeck = document.getElementById('submitDeck')
+  submitDeck.innerText = 'Submit Deck'
+
+  submitDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    postDeck()
+  })
+}
+ 
+function postDeck() {  
+  let name = document.getElementById('name').value
+
+  const data = {name: name, user_id: userId}
+  console.log(data)
+
+  return fetch('http://10.0.0.99:3000/api/v1/decks', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
   .then(data => {    
       console.log('Success:', data);
-      fetchDecks()
+      fetchUserDecks(userId)
     })
     .catch((error) => {
-      console.error('Error:', error)
+      alert('Error:', error)
     })  
   
 }
@@ -157,6 +293,17 @@ function fetchDecks() {
   })
 }
 
+function fetchUserDecks() {
+  console.log('id', userId)
+  fetch(`http://10.0.0.99:3000/api/v1/users/${userId}`)
+  .then((res) => res.json())
+  .then(results => {
+    decks = results.decks    
+    console.log('results', decks)
+    renderDeck()
+  })
+}
+
 function postCard(deck) {  
   let question = document.getElementById('question').value 
   let answer = document.getElementById('answer').value  
@@ -167,6 +314,7 @@ function postCard(deck) {
   return fetch('http://10.0.0.99:3000/api/v1/cards', {
     method: 'POST',
     headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
@@ -217,7 +365,7 @@ function renderCard(data, deck) {
 
   allDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
-    fetchDecks()
+    fetchUserDecks(userId)
   })
 }
 
@@ -245,76 +393,351 @@ function renderDeck() {
     main.appendChild(div)  
 
     pickDeckBtn.addEventListener("click", function(e) { 
-      e.preventDefault()     
-      chooseDeck(deck)
+      e.preventDefault() 
+      fetchDeck(deck.id)    
+      //chooseDeck(deck)
     })
   })
 
 }
 
+
+
+function fetchDeck(deckId) { 
+  //clearMain()
+  fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, { 
+  headers: {
+    'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`
+  }
+})
+  .then((res) => res.json())
+  .then(results => {  
+    deck = results  
+    chooseDeck(deck)      
+  })
+}
+
+
 function chooseDeck(deck) {
   clearMain()
+  resetForms()
   
   let div = document.createElement('div')
   let h2 = document.createElement('h2')
+  let seeCardsBtn = document.createElement('button')  
   let addCardBtn = document.createElement('button')
   let quizBtn = document.createElement('button')
   let editBtn = document.createElement('button')
   let deleteBtn = document.createElement('button')
   
-  h2.innerText = deck.name  
+  h2.innerText = deck.name 
+
+  seeCardsBtn.innerText = 'See Cards'   //added  SEE CARDS
   addCardBtn.innerText = 'Add Card'  
   quizBtn.innerText = 'Quiz Yourself'
-  editBtn.innerText = 'Edit Deck'
+  editBtn.innerText = 'Edit Deck Name'
   deleteBtn.innerText = 'Delete Deck'
 
-  main.append(div, h2, addCardBtn, quizBtn, editBtn, deleteBtn)
+  main.append(div, h2, seeCardsBtn, addCardBtn, quizBtn, editBtn, deleteBtn)   //added seeCardBtn-  SEE CARDS
 
-  addCardBtn.addEventListener('click', function(e) {
+  seeCardsBtn.addEventListener('click', function(e) {    
+    seeCards(deck)
+  })
+
+  addCardBtn.addEventListener('click', function(e) {  
     addCard(deck)
   })
 
-  quizBtn.addEventListener('click', function(e) {
-   quizYourself(deck)
+  quizBtn.addEventListener('click', function(e) {   
+    quizYourself(deck)
   })
 
-  editBtn.addEventListener('click', function(e) {
-    editDeck(deck)
+  editBtn.addEventListener('click', function(e) {   
+    editDeckName(deck)
   })
 
-  deleteBtn.addEventListener('click', function(e) {
-    alert('also clicked')
+  deleteBtn.addEventListener('click', function(e) {  
+    deleteDeck(deck)
+  })
+}
+
+function seeCards(deck) {  //added this function---SEE CARDS
+  clearMain()
+  resetForms()
+  let h3 = document.createElement('h3')
+  let backBtn = document.createElement('button')
+
+  h3.innerText = deck.name
+  backBtn.innerText = 'Back to Deck'
+
+  h3.appendChild(backBtn)
+  main.appendChild(h3)
+
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
+  
+  deck.cards.forEach(card => {  
+    let cardFt = card.front
+    let cardBk = card.back 
+  displayCard(card, cardFt, cardBk)
+  })
+}
+
+
+//ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
+function displayCard(card, cardFt, cardBk) {    
+    let div = document.createElement('div')
+    let cardFront = document.createElement('h4')    
+    let cardBack = document.createElement('h4')
+    let editCardBtn = document.createElement('button')
+    let deleteCardBtn = document.createElement('button')
+    
+    div.setAttribute('class', 'card')
+    div.setAttribute('data-id', `${card.id}`)
+    editCardBtn.setAttribute('data-card-id', `${card.id}`)  
+    deleteCardBtn.setAttribute('data-card-id', `${card.id}`)      
+
+    cardFront.innerText = `Question: ${cardFt}` 
+    cardBack.innerText = `Answer: ${cardBk}` 
+    editCardBtn.innerText = "Edit Card"
+    deleteCardBtn.innerText = "Delete Card"
+
+    div.appendChild(cardFront)
+    div.appendChild(cardBack)
+    div.appendChild(editCardBtn)
+    div.appendChild(deleteCardBtn)
+    main.appendChild(div)  
+    
+  editCardBtn.addEventListener('click', function(e) {
+    editCard(card, deck)
+  })
+
+  deleteCardBtn.addEventListener('click', function(e) {
+    deleteCard(card, deck) 
+  })  
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
+}
+
+//BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS
+//NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS---****DONE***
+function editCard(card, deck) {
+  console.log('in edit card', card)
+  clearMain() 
+  
+  let form = document.getElementById("addCardForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')
+  heading.innerText = 'Edit Card'  
+
+  form.question.value = card.front
+  form.answer.value = card.back
+  form.submitCard.innerText = "Submit Edit"
+  
+  form.submitCard.addEventListener('click', function(e) {
+    e.preventDefault()
+    patchCard(card, deck)
+  })
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
+
+  backToCards.addEventListener('click', function(e) {
+    e.preventDefault()
+    seeCards(deck)
+  })
+}
+
+function patchCard(card, deck) {
+  console.log('in patchCard', card)
+  let cardId = card.id
+  let deck_id = card.deck_id
+  let card_front = document.getElementById('question').value
+  let card_back = document.getElementById('answer').value
+
+  const data = {front: card_front, back: card_back, deck_id: deck_id}
+  console.log('data', data)
+
+  return fetch(`http://10.0.0.99:3000/api/v1/cards/${cardId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization':  `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('after fetch-data', data)
+    renderCard(data, deck)
+  })
+}
+
+//NEED TO FIGURE OUT HOW TO MAKE THIS GO BACK TO THIS DECK'S CARDS & HAVE IT EXCLUDE THE DELETED CARD--***FIXED***
+function deleteCard(card,deck) {
+  console.log('in delete card', card)
+  let cardId = card.id
+  let deckId = deck.id
+  
+  return fetch(`http://10.0.0.99:3000/api/v1/cards/${cardId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('after fetch', data)
+    //fetchDeck(deckId)
+    cardsAfterDelete(data, deck)
+    //cardsAfterDelete(data, deck)
+  })
+  .catch((error) => {
+    alert('Error:', error)
+  })    
+}
+
+
+function cardsAfterDelete(cards, deck) {
+  clearMain()
+  resetForms()
+  let h3 = document.createElement('h3')
+  h3.innerText = deck.name
+  backBtn.innerText = 'Back to Deck'
+
+  h3.appendChild(backBtn)
+  main.appendChild(h3)
+  let chosen = cards.data.filter(card => card.relationships.deck.data.id == deck.id)
+       
+  chosen.forEach(card => {   
+    let cardFt = card.attributes.front
+    let cardBk = card.attributes.back
+    displayCard(card, cardFt, cardBk)    
   })
 }
 
 //need to have event listener for edit button. I may need to use a different button
-function editDeck(deck) {
+function editDeckName(deck) {
   console.log(deck)
-  clearMain()
-  let heading = document.createElement('h4')
-  heading.innerText = `Edit ${deck.name} Deck`
+  clearMain()   
+  
   let form = document.getElementById("addDeckForm")
   form.style.display = "block"
+
+  let heading = form.querySelector('h4')
+  heading.innerText = "Edit Deck Name"
+
+  let backBtn = form.querySelector("#backBtn") 
+  backBtn.style.display = "block"
+
+  //let priorHeading = form.querySelector('h4')  
+  //if(priorHeading) {
+  //  priorHeading.parentElement.removeChild(priorHeading)
+  //}  
   
   form.name.value = deck.name
   form.submitDeck.innerText = 'Submit Edit'
-  form.prepend(heading)
+  //form.prepend(heading)
+
+  form.submitDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    patchDeck(deck)
+  })
+
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
+}
+
+function patchDeck(deck) {
+  console.log('in patchDeck', deck)
+  let deckId = deck.id
+  let name = document.getElementById('name').value
+
+  const data = {name: name, user_id: userId}
+  console.log(data)
+
+  return fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, {
+    method: 'PATCH',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+  .then(response => response.json())
+  .then(data => {    
+      console.log('Success:', data);
+      fetchUserDecks(userId)
+    })
+    .catch((error) => {
+      alert('Error:', error)
+    })    
+  
+}
+
+//WORKS TO DELETE DECK BUT CARDS IN DECK STILL EXIST. NEED TO FIX IT---****FIXED****
+function deleteDeck(deck) {
+  console.log('in delete', deck)
+  let deckId = deck.id
+
+  return fetch(`http://10.0.0.99:3000/api/v1/decks/${deckId}`, {
+    method: 'DELETE',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwt_token')}`,
+      'Content-Type': 'application/json',
+    },
+    
+  })
+  .then(response => response.json())
+  .then(data => {    
+      console.log('Success:', data);
+      fetchUserDecks(userId)
+    })
+    .catch((error) => {
+      alert('Error:', error)
+    })    
+  
 }
 
 
-
+//REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
 function addCard(deck) {
-  clearMain()
-  document.getElementById("addCardForm").style.display = "block"   
+  console.log('in addCard-deck', deck)
+  clearMain()  
+
+  let form = document.getElementById("addCardForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')  
+  heading.innerText = "Add Card"     
+
   let submitCard = document.getElementById('submitCard')
+  submitCard.innerText = "Submit Card"
 
   submitCard.addEventListener("click", function(e) {
     e.preventDefault()
     postCard(deck)
+  })  
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
+
+  backToCards.addEventListener('click', function(e) {
+    seeCards(deck)
   })
 }
 
+//NEED TO ADD A CK WITH AN ERROR MSG IF THERE ARE  NO CARDS IN THE DECK
 function quizYourself(deck) {  
+  console.log('deck in quiz', deck)
   let card = deck.cards[counter]    
   clearMain()
  
@@ -322,7 +745,7 @@ function quizYourself(deck) {
   let p1 = document.createElement('p')
   let ckAnsBtn = document.createElement('button')
 
-  div1.setAttribute('class', 'cards')
+  div1.setAttribute('class', 'card')
   div1.setAttribute('id', 'qDiv')
   p1.setAttribute('id', 'p')
   ckAnsBtn.setAttribute('id', 'btn')  
@@ -332,11 +755,20 @@ function quizYourself(deck) {
   p1.appendChild(ckAnsBtn)
   div1.appendChild(p1)
   main.appendChild(div1)  
+
+  let backToDeck = document.createElement('button')
+  backToDeck.innerText = "Back to Deck"
+  main.appendChild(backToDeck)
   
   ckAnsBtn.addEventListener('click', function(e) {
     e.preventDefault()
     checkAnswer(deck, card)
   })  
+
+  backToDeck.addEventListener('click', function(e) {
+    e.preventDefault()
+    chooseDeck(deck)
+  })
 }
 
 function checkAnswer(deck, card) {
@@ -344,7 +776,7 @@ function checkAnswer(deck, card) {
   let p = document.createElement('p')
   let btn = document.createElement('button')
 
-  div.setAttribute('class', 'answer')
+  div.setAttribute('class', 'card')
   div.setAttribute('id', 'ansDiv')
   p.innerText = card.back
   btn.innerText = 'next'
@@ -399,14 +831,18 @@ function checkAnswer(deck, card) {
   } 
   
   function quit() {
+    userId = null
     clearMain()
     resetForms()
+    
     let div = document.createElement('div')
     let h2 = document.createElement('h2')
 
     h2.innerText = 'Great job, come back soon!'
-
-    main.append(div, h2)    
+    main.append(div, h2)
+    localStorage.clear()
+    console.log('token', localStorage.jwt_token)
+    console.log('userId', userId)    
   }
   
    

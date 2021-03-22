@@ -19,9 +19,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav">
             <a class="nav-item nav-link active" id="homeLink" href="#home">Home <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" id="signInLink" href="#signIn">Sign In</a>
-            <a class="nav-item nav-link" id="decksLink" href="#seeDecks">See Decks</a>
-            <a class="nav-item nav-link" id="addDeckLink" href="#addDeck">Add Deck</a>
+            <a class="nav-item nav-link" id="logInLink" href="#logIn">Log In</a>
+            <a class="nav-item nav-link" id="signUpLink" href="#signUp">Sign Up</a>
+            <a class="nav-item nav-link" id="decksLink" href="#fetchUserDecks">My Decks</a>
+            <a class="nav-item nav-link" id="addDeckLink" href="#addNewDeck">Add Deck</a>
             <a class="nav-item nav-link" id="quitLink" href="#quit">Quit</a>
             <!--<a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
           </div>
@@ -33,27 +34,42 @@
   </header>
 
   <div>
-    <form id="signInForm">
-      <label for="userName">User Name</label>
-      <input type="text" name="userName" id="userName"></input>
-      <input type="password" name="password" id="password"></input>
-      <button type="submit" name="submitSignIn" id="submitSignIn">Submit</button>
+    <form id="logInForm">
+      <h4>Log In</h4>      
+      <input type="text" name="userName" id="userName" placeholder="username"></input>
+      <input type="password" name="password" id="password" placeholder="password"></input>
+      <button type="submit" name="submitLogIn" id="submitLogIn">Submit</button>
     </form>
 
-    <form id="addDeckForm">
+  <div>
+    <form id="signUpForm">
+      <h4>Sign Up for Code Card</h4>      
+      <input type="text" name="userName" id="newUserName" placeholder="username"></input>
+      <input type="password" name="password" id="newUserPassword" placeholder="password"></input>
+      <button type="submit" name="submitSignUp" id="submitSignUp">Submit</button>
+    </form>  
+
+    <form id="addDeckForm">  
+      <h4></h4>    
       <label for="name">Name of Deck:</label>
       <input type="text" name="name" id="name"></input>
       <button type="submit" name="submitDeck" id="submitDeck">Add New Deck</button>
+      <br>
+      <button type="button" name="backBtn" id="backBtn">Back To Deck</button>
     </form>
   </div>
 
   <div>
-    <form id="addCardForm">    
+    <form id="addCardForm">  
+      <h4></h4>  
       <label for="question">Question:</label>
       <input type="text" name="question" id="question"></input>
       <label for="answer">Answer:</label>
       <input type="text" name="answer" id="answer"></input>
       <button type="submit" name="submitCard" id="submitCard">Add New Card</button>
+      <br>
+      <button type="button" name="backToDeck" id="backToDeck">Back To Deck</button>
+      <button type="button" name="backToCards" id="backToCards">BackToCards</button>
     </form>
   </div>
 
