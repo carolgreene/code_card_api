@@ -136,7 +136,7 @@ function logIn() {
 
 function postLogIn() {
   let userName = document.getElementById('userName').value
-  let password = document.getElementById('password').value
+  let password = document.getElementById('password').value  
 
   const data = {user: {name: userName, password: password}}
   console.log('data', data)
@@ -150,10 +150,18 @@ function postLogIn() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success', data)
+    if(data.error) {
+      alert(error)
+    } else {
     localStorage.setItem('jwt_token', data.jwt)
     console.log('jwt_token', localStorage.jwt_token)    
     renderUserProfile(data)
+    }
+  })
+  .catch((error) => {
+    console.log(error)
+    //alert(error.response)  CAN'T GET THIS TO DISPLAY THE ERROR so I hardcoded it below
+    alert("Invalid name or password. Please try again.")
   })
 }
 
@@ -219,9 +227,16 @@ function postSignUp() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success', data)
+    if(data.error) {        
+      alert(data.error)  
+      document.getElementById("signUpForm").reset()      
+    } else {      
     localStorage.setItem('jwt_token', data.jwt)
     renderUserProfile(data)
+    }
+  })
+  .catch((error) => {
+    console.error('Error:', error)
   })
 }
 
@@ -260,13 +275,17 @@ function postDeck() {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {    
-      console.log('Success:', data);
+  .then(data => {        
+    if(data.error) {        
+      alert(data.error)  
+      document.getElementById("addDeckForm").reset()      
+    } else {        
       fetchUserDecks(userId)
-    })
-    .catch((error) => {
-      alert('Error:', error)
-    })  
+    }      
+  })
+  .catch((error) => {
+    alert('Error:', error)
+  })  
   
 }
   
@@ -302,6 +321,9 @@ function fetchUserDecks() {
     console.log('results', decks)
     renderDeck()
   })
+  .catch((error) => {
+    alert('Error:', error)
+  })
 }
 
 function postCard(deck) {  
@@ -321,11 +343,14 @@ function postCard(deck) {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success:', data);
+    if(data.error) {
+      alert(data.error)
+    } else {
     renderCard(data, deck)
+    }
   })
   .catch((error) => {
-    console.error('Error:', error)
+    alert('Error:', error)
   })
 }
 
@@ -414,6 +439,9 @@ function fetchDeck(deckId) {
   .then(results => {  
     deck = results  
     chooseDeck(deck)      
+  })
+  .catch((error) => {
+    alert('Error:', error)
   })
 }
 
@@ -572,8 +600,15 @@ function patchCard(card, deck) {
   })
   .then(response => response.json())
   .then(data => {
+    if(data.error) {
+      alert(error)
+    } else {
     console.log('after fetch-data', data)
     renderCard(data, deck)
+    }
+  })
+  .catch((error) => {
+    alert('Error:', error)
   })
 }
 
@@ -593,10 +628,14 @@ function deleteCard(card,deck) {
   })
   .then(response => response.json())
   .then(data => {
+    if(data.error) {
+      alert(error)
+    } else {
     console.log('after fetch', data)
     //fetchDeck(deckId)
     cardsAfterDelete(data, deck)
     //cardsAfterDelete(data, deck)
+    }    
   })
   .catch((error) => {
     alert('Error:', error)
@@ -672,14 +711,17 @@ function patchDeck(deck) {
     body: JSON.stringify(data),
   })
   .then(response => response.json())
-  .then(data => {    
+  .then(data => {  
+    if(data.error) {
+      alert(error)
+    } else {
       console.log('Success:', data);
       fetchUserDecks(userId)
-    })
-    .catch((error) => {
-      alert('Error:', error)
-    })    
-  
+    }
+  })
+  .catch((error) => {
+    alert('Error:', error)
+  })    
 }
 
 //WORKS TO DELETE DECK BUT CARDS IN DECK STILL EXIST. NEED TO FIX IT---****FIXED****
@@ -696,14 +738,17 @@ function deleteDeck(deck) {
     
   })
   .then(response => response.json())
-  .then(data => {    
+  .then(data => {  
+    if(data.error) {
+     alert(error) 
+    } else {  
       console.log('Success:', data);
       fetchUserDecks(userId)
+    }  
     })
-    .catch((error) => {
-      alert('Error:', error)
-    })    
-  
+  .catch((error) => {
+    alert('Error:', error)
+  })      
 }
 
 
