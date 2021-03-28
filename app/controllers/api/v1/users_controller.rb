@@ -19,7 +19,7 @@ class Api::V1::UsersController < ApplicationController
       status: :created      
     else 
       error_resp = {
-        error: user.errors.full_messages.to_sentence
+        error: @user.errors.full_messages.to_sentence
       }
       render json: error_resp, status: :unprocessable_entity
     end 
