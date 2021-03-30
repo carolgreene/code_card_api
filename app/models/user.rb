@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   validates_presence_of :name, :password  
-  validates :name, uniqueness: { case_sensitive: false }
+  validates :name, uniqueness: { case_sensitive: false } #case_sensitive false does not work w/sqlite. 
   
   has_secure_password
   has_many :decks 
