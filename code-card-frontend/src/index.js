@@ -184,15 +184,23 @@ function renderUserProfile(data) {
   let h3 = document.createElement('h3')
   let seeDecksBtn = document.createElement('button')
   let addDeckBtn = document.createElement('button')
-  let name = data.user.data.attributes.name    
+  let name = data.user.data.attributes.name  
+  
+  div.setAttribute('class', 'btn-group-vertical')
  
   h3.innerText = `Hi, ${name}! Pick a deck or add a new one.`
   seeDecksBtn.setAttribute('type', 'button')
+  seeDecksBtn.setAttribute('class','btn btn-primary' )
   seeDecksBtn.innerText ='Pick a Deck'
   addDeckBtn.setAttribute('type', 'button')
+  addDeckBtn.setAttribute('class','btn btn-success' )
   addDeckBtn.innerText ='Add New Deck'
 
-  main.append(div, h3, seeDecksBtn, addDeckBtn)  
+  div.appendChild(seeDecksBtn)
+  div.appendChild(addDeckBtn)
+  main.append(div)  
+
+  main.appendChild(h3)
 
   seeDecksBtn.addEventListener('click', function(e) {
     e.preventDefault()
