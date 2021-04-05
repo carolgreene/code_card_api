@@ -100,14 +100,24 @@ function welcome() {
   let h1 = document.createElement('h1')
   let signUpBtn = document.createElement('button')
   let logInBtn = document.createElement('button')
+  
+  div.setAttribute('class', 'btn-group-vertical')
 
   h1.innerText = 'Welcome to Code Card!'
-  signUpBtn.setAttribute('type','button')
+  signUpBtn.setAttribute('type','button')  
+  signUpBtn.setAttribute('class', 'btn btn-success')
+   
   signUpBtn.innerText = 'Sign Up'
   logInBtn.setAttribute('type', 'button')
-  logInBtn.innerText = 'Log In'
+  logInBtn.setAttribute('class','btn btn-primary' )
   
-  main.append(div, h1, signUpBtn, logInBtn)
+  logInBtn.innerText = 'Log In'  
+  
+  div.appendChild(signUpBtn)
+  div.appendChild(logInBtn)
+  main.append(div)
+
+  main.appendChild(h1)  
 
   console.log('in welcome-userId', userId)
 
