@@ -463,7 +463,7 @@ function fetchDeck(deckId) {
   })
 }
 
-
+//This is not showing the buttons right. not giving the margins & overlaying heading.///****** */
 function chooseDeck(deck) {
   clearMain()
   resetForms()
@@ -478,13 +478,33 @@ function chooseDeck(deck) {
   
   h2.innerText = deck.name 
 
+  div.setAttribute('class', 'btn-group-vertical big')
+  
+  seeCardsBtn.setAttribute('type','button')
+  seeCardsBtn.setAttribute('class','btn btn-primary')
   seeCardsBtn.innerText = 'See Cards'   //added  SEE CARDS
-  addCardBtn.innerText = 'Add Card'  
+  addCardBtn.setAttribute('type','button')
+  addCardBtn.setAttribute('class','btn btn-success' )
+  addCardBtn.innerText = 'Add Card' 
+  quizBtn.setAttribute('type','button')
+  quizBtn.setAttribute('class','btn btn-primary' )
   quizBtn.innerText = 'Quiz Yourself'
+  editBtn.setAttribute('type','button')
+  editBtn.setAttribute('class','btn btn-success' )
   editBtn.innerText = 'Edit Deck Name'
+  deleteBtn.setAttribute('type', 'button')
+  deleteBtn.setAttribute('class','btn btn-primary' )
   deleteBtn.innerText = 'Delete Deck'
 
-  main.append(div, h2, seeCardsBtn, addCardBtn, quizBtn, editBtn, deleteBtn)   //added seeCardBtn-  SEE CARDS
+  div.appendChild(seeCardsBtn)
+  div.appendChild(addCardBtn)
+  div.appendChild(quizBtn)
+  div.appendChild(editBtn)
+  div.appendChild(deleteBtn)
+
+  main.append(div)   //added seeCardBtn-  SEE CARDS
+
+  main.appendChild(h2)
 
   seeCardsBtn.addEventListener('click', function(e) {    
     seeCards(deck)
@@ -504,7 +524,7 @@ function chooseDeck(deck) {
 
   deleteBtn.addEventListener('click', function(e) {  
     deleteDeck(deck)
-  })
+  })  
 }
 
 function seeCards(deck) {  //added this function---SEE CARDS
