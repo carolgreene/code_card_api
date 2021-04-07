@@ -52,9 +52,14 @@ button {
   border-radius: 10px;
 }
 
-button.release {
-  float: right;
-  background-color: #E1332D;
+.btn-group-vertical {
+  height: 30px;
+  border-radius: 10px;
+  padding: 50px 0px;
+}
+
+.btn-group-vertical.big {
+  height: 204px;
 }
 
 @media only screen and (min-width: 500px) {
@@ -65,7 +70,7 @@ button.release {
 
 @media only screen and (min-width: 850px) {
   main {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
