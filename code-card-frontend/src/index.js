@@ -98,38 +98,52 @@ function welcome() {
   resetForms()
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
-  let signUpBtn = document.createElement('button')
-  let logInBtn = document.createElement('button')
+  let btn1 = document.createElement('button')  
+  let btn2 = document.createElement('button')     
   
   div.setAttribute('class', 'btn-group-vertical')
 
-  h1.innerText = 'Welcome to Code Card!'
-  signUpBtn.setAttribute('type','button')  
-  signUpBtn.setAttribute('class', 'btn btn-success')
-   
-  signUpBtn.innerText = 'Sign Up'
-  logInBtn.setAttribute('type', 'button')
-  logInBtn.setAttribute('class','btn btn-primary' )
-  
-  logInBtn.innerText = 'Log In'  
-  
-  div.appendChild(signUpBtn)
-  div.appendChild(logInBtn)
-  main.append(div)
+  h1.innerText = 'Welcome to Code Card!'  
+
+  btn1.setAttribute('type','button')             
+  btn1.setAttribute('class', 'btn btn-success')    
+
+  btn2.setAttribute('type','button')             
+  btn2.setAttribute('class', 'btn btn-primary')    
+
+  div.appendChild(btn1)  
+  div.appendChild(btn2)  
+  main.append(div)       
 
   main.appendChild(h1)  
+  
+  if(userId === null) {
+    btn1.innerText = 'Sign Up'
+    btn2.innerText = 'Log In'
 
-  console.log('in welcome-userId', userId)
+    btn1.addEventListener('click', function(e) {
+      e.preventDefault()
+      signUp()
+    })
 
-  signUpBtn.addEventListener('click', function(e) {
-    e.preventDefault()
-    signUp()
-  })
+    btn2.addEventListener('click', function(e) {
+      e.preventDefault()
+      logIn()
+    })
+  } else {
+    btn1.innerText = 'Pick a Deck'
+    btn2.innerText = 'Add New Deck'
 
-  logInBtn.addEventListener('click', function(e) {
-    e.preventDefault()
-    logIn()
-  })
+    btn1.addEventListener('click', function(e) {
+      e.preventDefault()
+      fetchUserDecks(userId)
+    })
+
+    btn2.addEventListener('click', function(e) {
+      e.preventDefault()
+      addNewDeck()
+    })    
+  }
 }
 
 function logIn() {
