@@ -99,15 +99,13 @@ function welcome() {
   let div = document.createElement('div')
   let h1 = document.createElement('h1')
   let btn1 = document.createElement('button')  
-  let btn2 = document.createElement('button')     
+  let btn2 = document.createElement('button')  
   
-  div.setAttribute('class', 'btn-group-vertical')
-
-  h1.innerText = 'Welcome to Code Card!'  
-
+  h1.innerText = 'Welcome to Code Card!'
+  
+  div.setAttribute('class', 'btn-group-vertical')  
   btn1.setAttribute('type','button')             
-  btn1.setAttribute('class', 'btn btn-success')    
-
+  btn1.setAttribute('class', 'btn btn-success')  
   btn2.setAttribute('type','button')             
   btn2.setAttribute('class', 'btn btn-primary')    
 
