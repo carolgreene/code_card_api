@@ -69,7 +69,7 @@ function resetForms() {
   document.getElementById("addDeckForm").reset()
   document.getElementById("addDeckForm").style.display = 'none' 
   document.getElementById("addCardForm").reset()
-  document.getElementById("addCardForm").style.display = 'none'
+  document.getElementById("addCardForm").style.display = 'none'  
   setNavBar()
 }
 
@@ -274,19 +274,35 @@ function postSignUp() {
 function addNewDeck() {  
   clearMain()
   resetForms()
+  let div = document.createElement('div')
+  let backHomeBtn = document.createElement('button')
+
   let form = document.getElementById("addDeckForm")
   form.style.display = "block"
   let heading = form.querySelector('h4')
   heading.innerText = "Add New Deck"
-  let backBtn = form.querySelector("#backBtn") 
-  backBtn.style.display = "none"
+  //let backBtn = form.querySelector("#backBtn")   //removed btn from form html
+  //backBtn.style.display = "none"
 
   let submitDeck = document.getElementById('submitDeck')
   submitDeck.innerText = 'Submit Deck'
 
+  div.setAttribute('class', 'btn-group-vertical')    //added this section
+  backHomeBtn.setAttribute('type','button')             
+  backHomeBtn.setAttribute('class', 'btn btn-success')  
+  backHomeBtn.innerText = 'Back to Home'
+
+  div.appendChild(backHomeBtn)  //added
+  main.append(div)           //added
+
   submitDeck.addEventListener('click', function(e) {
     e.preventDefault()
     postDeck()
+  })
+
+  backHomeBtn.addEventListener('click', function(e) {
+    e.preventDefault()
+    welcome()
   })
 }
  
@@ -604,7 +620,25 @@ function displayCard(card, cardFt, cardBk) {
 function editCard(card, deck) {
   console.log('in edit card', card)
   clearMain() 
-  
+//Begin set up buttons- can make this a separate function to use
+//with add card or edit card
+  let div = document.createElement('div')
+  let backToDeck = document.createElement('button')
+  let backToCards = document.createElement('button')
+
+  div.setAttribute('class', 'btn-group-vertical')  
+  backToDeck.setAttribute('type','button')             
+  backToDeck.setAttribute('class', 'btn btn-success')  
+  backToDeck.innerText = 'Back to Deck'
+  backToCards.setAttribute('type','button')             
+  backToCards.setAttribute('class', 'btn btn-primary') 
+  backToCards.innerText = 'Back to Cards'     
+
+  div.appendChild(backToDeck)
+  div.appendChild(backToCards)
+  main.append(div)
+  //end set up buttons
+
   let form = document.getElementById("addCardForm")
   form.style.display = "block"
   let heading = form.querySelector('h4')
@@ -714,7 +748,9 @@ function cardsAfterDelete(cards, deck) {
 //need to have event listener for edit button. I may need to use a different button
 function editDeckName(deck) {
   console.log(deck)
-  clearMain()   
+  clearMain() 
+  let div = document.createElement('div')   //added
+  let backBtn2 = document.createElement('button')  //added
   
   let form = document.getElementById("addDeckForm")
   form.style.display = "block"
@@ -722,8 +758,16 @@ function editDeckName(deck) {
   let heading = form.querySelector('h4')
   heading.innerText = "Edit Deck Name"
 
-  let backBtn = form.querySelector("#backBtn") 
-  backBtn.style.display = "block"
+  //let backBtn = form.querySelector("#backBtn") 
+  //backBtn.style.display = "block"
+
+  div.setAttribute('class', 'btn-group-vertical')    //added this section
+  backBtn2.setAttribute('type','button')             
+  backBtn2.setAttribute('class', 'btn btn-success')  
+  backBtn2.innerText = 'Back to Deck'
+
+  div.appendChild(backBtn2)  //added
+  main.append(div)           //added
 
   //let priorHeading = form.querySelector('h4')  
   //if(priorHeading) {
@@ -739,7 +783,8 @@ function editDeckName(deck) {
     patchDeck(deck)
   })
 
-  backBtn.addEventListener('click', function(e) {
+  //backBtn.addEventListener('click', function(e) {
+    backBtn2.addEventListener('click', function(e) {  //added
     chooseDeck(deck)
   })
 }
@@ -801,16 +846,36 @@ function deleteDeck(deck) {
   })      
 }
 
-
+//NEED TO FINISH THIS TO GET FORM IN THE MIDDLE & BUTTONS ON THE SIDE
 //REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
 function addCard(deck) {
   console.log('in addCard-deck', deck)
   clearMain()  
+  let div = document.createElement('div')
+  let backToDeck = document.createElement('button')
+  let backToCards = document.createElement('button')
+
+  div.setAttribute('class', 'btn-group-vertical')  
+  backToDeck.setAttribute('type','button')             
+  backToDeck.setAttribute('class', 'btn btn-success')  
+  backToDeck.innerText = 'Back to Deck'
+  backToCards.setAttribute('type','button')             
+  backToCards.setAttribute('class', 'btn btn-primary') 
+  backToCards.innerText = 'Back to Cards'     
+
+  div.appendChild(backToDeck)
+  div.appendChild(backToCards)
+  main.append(div)
+  
 
   let form = document.getElementById("addCardForm")
   form.style.display = "block"
   let heading = form.querySelector('h4')  
-  heading.innerText = "Add Card"     
+  heading.innerText = "Add Card"   
+  
+  //div.appendChild(form)
+  
+  //main.appendChild(form)   
 
   let submitCard = document.getElementById('submitCard')
   submitCard.innerText = "Submit Card"
