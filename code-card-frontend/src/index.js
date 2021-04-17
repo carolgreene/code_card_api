@@ -567,20 +567,20 @@ function seeCards(deck) {  //added this function---SEE CARDS
   h3.appendChild(backBtn)
   main.appendChild(h3)
 
-  backBtn.addEventListener('click', function(e) {
-    chooseDeck(deck)
-  })
+  //backBtn.addEventListener('click', function(e) {  ***don't think I need this, it's in displayCard below
+  //  chooseDeck(deck)
+  //})
   
   deck.cards.forEach(card => {  
     let cardFt = card.front
     let cardBk = card.back 
-  displayCard(card, cardFt, cardBk)
+  displayCard(card, cardFt, cardBk, backBtn)
   })
 }
 
 
 //ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
-function displayCard(card, cardFt, cardBk) {    
+function displayCard(card, cardFt, cardBk, backBtn) {    
     let div = document.createElement('div')
     let cardFront = document.createElement('h4')    
     let cardBack = document.createElement('h4')
