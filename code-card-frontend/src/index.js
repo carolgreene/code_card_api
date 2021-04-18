@@ -582,8 +582,8 @@ function seeCards(deck) {  //added this function---SEE CARDS
 //ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
 function displayCard(card, cardFt, cardBk, backBtn) {    
     let div = document.createElement('div')
-    let cardFront = document.createElement('h4')    
-    let cardBack = document.createElement('h4')
+    let cardFront = document.createElement('h5')   //changed from h4 
+    let cardBack = document.createElement('h5')    //changed from h4
     let editCardBtn = document.createElement('button')
     let deleteCardBtn = document.createElement('button')
     
