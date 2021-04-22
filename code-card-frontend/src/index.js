@@ -555,6 +555,7 @@ function chooseDeck(deck) {
   })  
 }
 
+//NEED TO ADD A CK WITH MSG IF DECK HAS NO CARDS*************
 function seeCards(deck) {  //added this function---SEE CARDS
   clearMain()
   resetForms()
@@ -895,40 +896,65 @@ function addCard(deck) {
   })
 }
 
-//NEED TO ADD A CK WITH AN ERROR MSG IF THERE ARE  NO CARDS IN THE DECK
+//OZZIE'S TEST DECK & OZZIE'S BEST TEST DECK DO NOT WORK FOR QUIZ YOURSELF. GET ERROR MSG. NEED TO FIX
+//NEED TO ADD A CK WITH AN ERROR MSG IF THERE ARE  NO CARDS IN THE DECK******  DONE***
 function quizYourself(deck) {  
   console.log('deck in quiz', deck)
   let card = deck.cards[counter]    
   clearMain()
- 
+
+  let div = document.createElement('div')  //added
+  let backToDeck = document.createElement('button')  //added
+  let h3 = document.createElement('h3')
+  
+  //added below
+  div.setAttribute('class', 'btn-group-vertical') 
+  h3.innerText = `${deck.name}`
+  backToDeck.setAttribute('type', 'button')
+  backToDeck.setAttribute('class','btn btn-success' )
+  backToDeck.innerText ='Back to Deck'
+  
+  div.appendChild(h3)
+  div.appendChild(backToDeck)
+  main.append(div)    
+  //end of added
+
   let div1 = document.createElement('div')
   let p1 = document.createElement('p')
-  let ckAnsBtn = document.createElement('button')
 
-  div1.setAttribute('class', 'card')
-  div1.setAttribute('id', 'qDiv')
-  p1.setAttribute('id', 'p')
-  ckAnsBtn.setAttribute('id', 'btn')  
-  ckAnsBtn.innerText = 'check answer'
-  p1.innerText = card.front
+  if(deck.cards.length < 1) {
+    p1.innerText = `This deck doesn't have any cards yet, go back to deck.`
+    div1.appendChild(p1)
+    main.appendChild(div1)
+  } else {  
+    let ckAnsBtn = document.createElement('button')
 
-  p1.appendChild(ckAnsBtn)
-  div1.appendChild(p1)
-  main.appendChild(div1)  
+    div1.setAttribute('class', 'card')
+    div1.setAttribute('id', 'qDiv')
+    p1.setAttribute('id', 'p')
+    ckAnsBtn.setAttribute('id', 'btn')  
+    ckAnsBtn.innerText = 'check answer'
+    p1.innerText = card.front
 
-  let backToDeck = document.createElement('button')
-  backToDeck.innerText = "Back to Deck"
-  main.appendChild(backToDeck)
+    div1.appendChild(p1)
+    div1.appendChild(ckAnsBtn)
+    main.appendChild(div1)  
+
+  //let backToDeck = document.createElement('button')   cmmt out original grouping
+  //backToDeck.innerText = "Back to Deck"
+  //main.appendChild(backToDeck)
   
-  ckAnsBtn.addEventListener('click', function(e) {
-    e.preventDefault()
-    checkAnswer(deck, card)
-  })  
+    ckAnsBtn.addEventListener('click', function(e) {
+      e.preventDefault()
+      checkAnswer(deck, card)
+    }) 
+  } 
 
   backToDeck.addEventListener('click', function(e) {
     e.preventDefault()
     chooseDeck(deck)
   })
+
 }
 
 function checkAnswer(deck, card) {
@@ -941,8 +967,8 @@ function checkAnswer(deck, card) {
   p.innerText = card.back
   btn.innerText = 'next'
 
-  p.appendChild(btn)
   div.appendChild(p)
+  div.appendChild(btn)
   main.appendChild(div)  
 
   btn.addEventListener('click', function(e) {
