@@ -45,6 +45,10 @@ div.card h5 {       /*changed from h4 */
   text-overflow: ellipsis;
 }
 
+div#goAgain {
+  margin-top: 20px;
+}
+
 p {
   font-size: 1.25em;
   color: black;
