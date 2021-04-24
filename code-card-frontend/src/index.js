@@ -1003,14 +1003,23 @@ function checkAnswer(deck, card) {
     let btn1 = document.createElement('button')
     let btn2 = document.createElement('button')
 
+    div.setAttribute('class', 'btn-group-vertical')
     div.setAttribute('id', 'goAgain')
     btn1.setAttribute('id', 'yesBtn')
+    btn1.setAttribute('class', 'btn btn-success')
     btn2.setAttribute('id', 'noBtn')
+    btn2.setAttribute('class', 'btn btn-primary')
     p.innerText = 'Congratulations, you finished the deck! Do you want to try another deck?'
     btn1.innerText = 'Yes'
     btn2.innerText = 'No'
     
-    main.append(div, p, btn1, btn2) 
+    //main.append(div, p, btn1, btn2) ***trying to fix layout 
+
+    //added
+    div.appendChild(p)
+    div.appendChild(btn1)
+    div.appendChild(btn2)
+    main.appendChild(div)
 
     btn1.addEventListener('click', function(e) {
       e.preventDefault()
