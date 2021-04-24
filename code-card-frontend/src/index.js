@@ -406,12 +406,12 @@ function renderCard(data, deck) {
     
   let card = data
   let div = document.createElement('div')
-  let cardFront = document.createElement('h3')
-  let cardBack = document.createElement('h3')
+  let cardFront = document.createElement('h6')
+  let cardBack = document.createElement('h6')
   let addAnotherCardBtn = document.createElement('button')
   let allDecksBtn = document.createElement('button')
 
-  div.setAttribute('class', 'card')
+  div.setAttribute('class', 'card scrollable')
   div.setAttribute('data-id', `${card.data.id}`)
   addAnotherCardBtn.setAttribute('data-card-id', `${card.data.id}`) 
   addAnotherCardBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)  
@@ -559,15 +559,23 @@ function chooseDeck(deck) {
 function seeCards(deck) {  //added this function---SEE CARDS
   clearMain()
   resetForms()
-  let h3 = document.createElement('h3')
+  let div = document.createElement('div')
   let backBtn = document.createElement('button')
-
+  let h3 = document.createElement('h3')
+  
+  
+  
+  div.setAttribute('class', 'btn-group-vertical')  
   h3.innerText = deck.name
+  backBtn.setAttribute('type','button')             
+  backBtn.setAttribute('class', 'btn btn-success') 
   backBtn.innerText = 'Back to Deck'
+  
 
-  h3.appendChild(backBtn)
-  main.appendChild(h3)
-
+  div.appendChild(h3)
+  div.appendChild(backBtn)
+  main.appendChild(div)
+  
   //backBtn.addEventListener('click', function(e) {  ***don't think I need this, it's in displayCard below
   //  chooseDeck(deck)
   //})
@@ -929,7 +937,7 @@ function quizYourself(deck) {
   } else {  
     let ckAnsBtn = document.createElement('button')
 
-    div1.setAttribute('class', 'card')
+    div1.setAttribute('class', 'card scrollable')
     div1.setAttribute('id', 'qDiv')
     p1.setAttribute('id', 'p')
     ckAnsBtn.setAttribute('id', 'btn')  
@@ -962,7 +970,7 @@ function checkAnswer(deck, card) {
   let p = document.createElement('p')
   let btn = document.createElement('button')
 
-  div.setAttribute('class', 'card')
+  div.setAttribute('class', 'card scrollable')
   div.setAttribute('id', 'ansDiv')
   p.innerText = card.back
   btn.innerText = 'next'
