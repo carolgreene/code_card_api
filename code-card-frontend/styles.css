@@ -32,6 +32,11 @@ div.card {
   border-radius: 10px;
 }
 
+div.scrollable {
+  overflow-y: auto;
+  max-height: 240px;
+}
+
 div.card h5 {       /*changed from h4 */
   overflow: hidden;
   display: -webkit-box;
