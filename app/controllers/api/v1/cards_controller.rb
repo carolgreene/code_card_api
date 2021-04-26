@@ -37,11 +37,14 @@ class Api::V1::CardsController < ApplicationController
     end 
   end
 
-  def destroy
+  def destroy    
     card = Card.find(params[:id])
-    cards = Card.all
+    deckId = card.deck_id
+    cards = Card.all    
     card.destroy
-    render json: CardSerializer.new(cards) 
+    cardsLeft = cards.select {|card| card.deck_id == deckId}
+    #byebug
+    render json: CardSerializer.new(cardsLeft) 
   end
 
 
