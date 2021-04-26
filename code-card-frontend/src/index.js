@@ -556,21 +556,18 @@ function chooseDeck(deck) {
 }
 
 //NEED TO ADD A CK WITH MSG IF DECK HAS NO CARDS*************
-function seeCards(deck) {  //added this function---SEE CARDS
+function seeCards(deck) {  //can make a separate function setting up divs & button to be used for this & cards after delete. They're the same
   clearMain()
   resetForms()
   let div = document.createElement('div')
   let backBtn = document.createElement('button')
-  let h3 = document.createElement('h3')
+  let h3 = document.createElement('h3')  
   
-  
-  
-  div.setAttribute('class', 'btn-group-vertical')  
+  div.setAttribute('class', 'btn-group-vertical') 
   h3.innerText = deck.name
-  backBtn.setAttribute('type','button')             
-  backBtn.setAttribute('class', 'btn btn-success') 
-  backBtn.innerText = 'Back to Deck'
-  
+  backBtn.setAttribute('type','button')           
+  backBtn.setAttribute('class', 'btn btn-success')
+  backBtn.innerText = 'Back to Deck'  
 
   div.appendChild(h3)
   div.appendChild(backBtn)
@@ -589,7 +586,8 @@ function seeCards(deck) {  //added this function---SEE CARDS
 
 
 //ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
-function displayCard(card, cardFt, cardBk, backBtn) {    
+function displayCard(card, cardFt, cardBk, backBtn) {  
+  console.log('display card', card, 'cardFt', cardFt, 'cardBk',cardBk, )  
     let div = document.createElement('div')
     let cardFront = document.createElement('h5')   //changed from h4 
     let cardBack = document.createElement('h5')    //changed from h4
@@ -726,7 +724,11 @@ function deleteCard(card,deck) {
     } else {
     console.log('after fetch', data)
     //fetchDeck(deckId)
-    cardsAfterDelete(data, deck)
+
+    let cards = data.data
+    let deckName = deck.name
+    
+    cardsAfterDelete(cards, deckName)
     //cardsAfterDelete(data, deck)
     }    
   })
@@ -735,22 +737,28 @@ function deleteCard(card,deck) {
   })    
 }
 
-
-function cardsAfterDelete(cards, deck) {
+//THIS DOES NOT WORK DOES NOT SEEM TO BE GETTING OUT OF THIS FUNCTION. TRY AGAIN TOMORROW.  ***yay, fixed!***
+function cardsAfterDelete(cards, deckName) {  
   clearMain()
   resetForms()
+  let div = document.createElement('div')
+  let backBtn = document.createElement('button')
   let h3 = document.createElement('h3')
-  h3.innerText = deck.name
+  
+  div.setAttribute('class', 'btn-group-vertical')
+  h3.innerText = `${deckName}`
+  backBtn.setAttribute('type','button')             
+  backBtn.setAttribute('class', 'btn btn-success')
   backBtn.innerText = 'Back to Deck'
 
-  h3.appendChild(backBtn)
-  main.appendChild(h3)
-  let chosen = cards.data.filter(card => card.relationships.deck.data.id == deck.id)
-       
-  chosen.forEach(card => {   
+  div.appendChild(h3)
+  div.appendChild(backBtn)
+  main.appendChild(div)
+  
+  cards.forEach(card => {
     let cardFt = card.attributes.front
     let cardBk = card.attributes.back
-    displayCard(card, cardFt, cardBk)    
+    displayCard(card, cardFt, cardBk, backBtn)    
   })
 }
 
