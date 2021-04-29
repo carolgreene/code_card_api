@@ -555,10 +555,7 @@ function chooseDeck(deck) {
   })  
 }
 
-//NEED TO ADD A CK WITH MSG IF DECK HAS NO CARDS*************
-function seeCards(deck) {  //can make a separate function setting up divs & button to be used for this & cards after delete. They're the same
-  clearMain()
-  resetForms()
+function setCardsLayout() {
   let div = document.createElement('div')
   let backBtn = document.createElement('button')
   let h3 = document.createElement('h3')  
@@ -572,21 +569,28 @@ function seeCards(deck) {  //can make a separate function setting up divs & butt
   div.appendChild(h3)
   div.appendChild(backBtn)
   main.appendChild(div)
-  
-  //backBtn.addEventListener('click', function(e) {  ***don't think I need this, it's in displayCard below
-  //  chooseDeck(deck)
-  //})
+
+  backBtn.addEventListener('click', function(e) {
+    chooseDeck(deck)
+  })
+}
+
+//NEED TO ADD A CK WITH MSG IF DECK HAS NO CARDS*************
+function seeCards(deck) {  //can make a separate function setting up divs for this & cards after delete. They're the same.***DONE***
+  clearMain()
+  resetForms()
+  setCardsLayout()  
   
   deck.cards.forEach(card => {  
     let cardFt = card.front
     let cardBk = card.back 
-  displayCard(card, cardFt, cardBk, backBtn)
+  displayCard(card, cardFt, cardBk)
   })
 }
 
 
 //ADD BUTTON HERE OR IN SEE CARDS TO GO BACK TO CHOOSE DECK  ****DONE****
-function displayCard(card, cardFt, cardBk, backBtn) {  
+function displayCard(card, cardFt, cardBk) {  
   console.log('display card', card, 'cardFt', cardFt, 'cardBk',cardBk, )  
     let div = document.createElement('div')
     let cardFront = document.createElement('h5')   //changed from h4 
@@ -617,9 +621,9 @@ function displayCard(card, cardFt, cardBk, backBtn) {
   deleteCardBtn.addEventListener('click', function(e) {
     deleteCard(card, deck) 
   })  
-  backBtn.addEventListener('click', function(e) {
+  /*backBtn.addEventListener('click', function(e) {   //don't need anymore. I put it in setCardsLayout***
     chooseDeck(deck)
-  })
+  })*/
 }
 
 //BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS
@@ -741,24 +745,12 @@ function deleteCard(card,deck) {
 function cardsAfterDelete(cards, deckName) {  
   clearMain()
   resetForms()
-  let div = document.createElement('div')
-  let backBtn = document.createElement('button')
-  let h3 = document.createElement('h3')
-  
-  div.setAttribute('class', 'btn-group-vertical')
-  h3.innerText = `${deckName}`
-  backBtn.setAttribute('type','button')             
-  backBtn.setAttribute('class', 'btn btn-success')
-  backBtn.innerText = 'Back to Deck'
-
-  div.appendChild(h3)
-  div.appendChild(backBtn)
-  main.appendChild(div)
+  setCardsLayout()  
   
   cards.forEach(card => {
     let cardFt = card.attributes.front
     let cardBk = card.attributes.back
-    displayCard(card, cardFt, cardBk, backBtn)    
+  displayCard(card, cardFt, cardBk)    
   })
 }
 
