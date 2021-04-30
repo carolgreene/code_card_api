@@ -626,29 +626,12 @@ function displayCard(card, cardFt, cardBk) {
   })*/
 }
 
-//BACK BUTTONS NEED TO BE SET UP FOR EDIT CARDS & EDIT DECKS
+//DOESNT' WORK RIGHT NOW. PUT SET UP IN setAddOrEditCardLayout & DOESN'T WORK WHEN I SUBMIT. NEITHER DOES THE EDIT CARD FUNCTION*****
 //NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS---****DONE***
 function editCard(card, deck) {
   console.log('in edit card', card)
   clearMain() 
-//Begin set up buttons- can make this a separate function to use
-//with add card or edit card
-  let div = document.createElement('div')
-  let backToDeck = document.createElement('button')
-  let backToCards = document.createElement('button')
-
-  div.setAttribute('class', 'btn-group-vertical')  
-  backToDeck.setAttribute('type','button')             
-  backToDeck.setAttribute('class', 'btn btn-success')  
-  backToDeck.innerText = 'Back to Deck'
-  backToCards.setAttribute('type','button')             
-  backToCards.setAttribute('class', 'btn btn-primary') 
-  backToCards.innerText = 'Back to Cards'     
-
-  div.appendChild(backToDeck)
-  div.appendChild(backToCards)
-  main.append(div)
-  //end set up buttons
+  setAddOrEditCardLayout()
 
   let form = document.getElementById("addCardForm")
   form.style.display = "block"
@@ -663,8 +646,8 @@ function editCard(card, deck) {
     e.preventDefault()
     patchCard(card, deck)
   })
-
-  backToDeck.addEventListener('click', function(e) {
+  /*
+  backToDeck.addEventListener('click', function(e) {  ***don't need these anymore.  put in setAddOrEditCardLayout function*****
     e.preventDefault()
     chooseDeck(deck)
   })
@@ -673,6 +656,7 @@ function editCard(card, deck) {
     e.preventDefault()
     seeCards(deck)
   })
+  */
 }
 
 function patchCard(card, deck) {
@@ -855,11 +839,8 @@ function deleteDeck(deck) {
   })      
 }
 
-//NEED TO FINISH THIS TO GET FORM IN THE MIDDLE & BUTTONS ON THE SIDE
-//REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
-function addCard(deck) {
-  console.log('in addCard-deck', deck)
-  clearMain()  
+
+function setAddOrEditCardLayout() {
   let div = document.createElement('div')
   let backToDeck = document.createElement('button')
   let backToCards = document.createElement('button')
@@ -875,24 +856,6 @@ function addCard(deck) {
   div.appendChild(backToDeck)
   div.appendChild(backToCards)
   main.append(div)
-  
-
-  let form = document.getElementById("addCardForm")
-  form.style.display = "block"
-  let heading = form.querySelector('h4')  
-  heading.innerText = "Add Card"   
-  
-  //div.appendChild(form)
-  
-  //main.appendChild(form)   
-
-  let submitCard = document.getElementById('submitCard')
-  submitCard.innerText = "Submit Card"
-
-  submitCard.addEventListener("click", function(e) {
-    e.preventDefault()
-    postCard(deck)
-  })  
 
   backToDeck.addEventListener('click', function(e) {
     e.preventDefault()
@@ -902,6 +865,38 @@ function addCard(deck) {
   backToCards.addEventListener('click', function(e) {
     seeCards(deck)
   })
+}
+
+//DOESNT' WORK RIGHT NOW. PUT SET UP IN setAddOrEditCardLayout & DOESN'T WORK WHEN I SUBMIT. NEITHER DOES THE EDIT CARD FUNCTION*****
+//***ACTUALLY WORKS, PROBLEM IS THE SQLITE BUSY PROBLEM NEED TO SWITCH TO POST GRES */
+//REMOVED USER/CARD RELATIONSHIP SO THIS WILL WORK
+function addCard(deck) {
+  console.log('in addCard-deck', deck)
+  clearMain()  
+  setAddOrEditCardLayout()  
+
+  let form = document.getElementById("addCardForm")
+  form.style.display = "block"
+  let heading = form.querySelector('h4')  
+  heading.innerText = "Add Card"      
+
+  let submitCard = document.getElementById('submitCard')
+  submitCard.innerText = "Submit Card"
+
+  submitCard.addEventListener("click", function(e) {
+    e.preventDefault()
+    postCard(deck)
+  })  
+  /*
+  backToDeck.addEventListener('click', function(e) {  *****don't need here. put it in setAddOrEditCardLayout*****
+    e.preventDefault()
+    chooseDeck(deck)
+  })
+
+  backToCards.addEventListener('click', function(e) {    *****don't need here. put it in setAddOrEditCardLayout****
+    seeCards(deck)
+  })
+  */
 }
 
 //OZZIE'S TEST DECK & OZZIE'S BEST TEST DECK DO NOT WORK FOR QUIZ YOURSELF. GET ERROR MSG. NEED TO FIX
