@@ -409,24 +409,24 @@ function renderCard(data, deck) {
   let cardFront = document.createElement('h6')
   let cardBack = document.createElement('h6')
   let addAnotherCardBtn = document.createElement('button')
-  let allDecksBtn = document.createElement('button')
+  let backToDeckBtn = document.createElement('button')
 
   div.setAttribute('class', 'card scrollable')
   div.setAttribute('data-id', `${card.data.id}`)
   addAnotherCardBtn.setAttribute('data-card-id', `${card.data.id}`) 
   addAnotherCardBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)  
-  allDecksBtn.setAttribute('data-card-id', `${card.data.id}`) 
-  allDecksBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)      
+  backToDeckBtn.setAttribute('data-card-id', `${card.data.id}`) 
+  backToDeckBtn.setAttribute('data-deck-id', `${card.data.attributes.deck_id}`)      
    
   cardFront.innerText = `Question: ${card.data.attributes.front}`
   cardBack.innerText = `Answer: ${card.data.attributes.back}`
   addAnotherCardBtn.innerText = 'Add Another Card'
-  allDecksBtn.innerText = 'See all decks'
+  backToDeckBtn.innerText = 'Back to Deck'
   
   div.appendChild(cardFront)
   div.appendChild(cardBack)
   div.appendChild(addAnotherCardBtn)
-  div.appendChild(allDecksBtn)
+  div.appendChild(backToDeckBtn)
   main.appendChild(div)  
 
   addAnotherCardBtn.addEventListener('click', function(e) {
@@ -434,9 +434,9 @@ function renderCard(data, deck) {
     addCard(deck)
   })
 
-  allDecksBtn.addEventListener('click', function(e) {
+  backToDeckBtn.addEventListener('click', function(e) {   
     e.preventDefault()
-    fetchUserDecks(userId)
+    fetchDeck(deck.id)
   })
 }
 
@@ -628,6 +628,7 @@ function displayCard(card, cardFt, cardBk) {
 
 //DOESNT' WORK RIGHT NOW. PUT SET UP IN setAddOrEditCardLayout & DOESN'T WORK WHEN I SUBMIT. NEITHER DOES THE EDIT CARD FUNCTION*****
 //NEED TO BUILD THESE 2 FUNCTIONS TO EDIT & DELETE CARDS---****DONE***
+//***ACTUALLY WORKS. PROBLEM IS W/SQLITE BEING BUSY. NEED TO CHANGE TO POST GRES */
 function editCard(card, deck) {
   console.log('in edit card', card)
   clearMain() 
